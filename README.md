@@ -3,7 +3,7 @@
 
 1. Telecharger Node.js [ici](https://nodejs.org/en/)
 2. Installer Node.
-3. Telecharger ou cloner le repoé
+3. Telecharger ou cloner le repo
 4. Dans le dossier du repo faire Shift+right click
 5. Ouvrir une fênetre de commande // Open command Line//Open PowerShell
 6. Entrez `node server.js`
