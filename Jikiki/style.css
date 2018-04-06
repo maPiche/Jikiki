@@ -5,6 +5,7 @@
     background-color: #f8ebcf;
     border-radius: 15px;
     padding: 15px;
+    box-shadow: -10px 2px 5px -5px #333, 10px 2px 5px -5px #333;
 }
 
 header{
@@ -25,13 +26,19 @@ nav, .browser, li{
     border: 2px solid black;
     border-radius: 15px;
 }
+nav li{
+    margin-left: 15px;
+}
 
+.browser li{
+    margin-bottom: 15px;
+}
 li{
     text-align: center;
     height: 50px;
     width: 150px;
     line-height: 30px;
-    margin-left: 15px;
+    box-shadow: 3px 2px 3px black;
 }
 nav{
     display: flex;
@@ -65,6 +72,7 @@ a:active{
 .browser{
     display: inline-block;
     float: left;
+    padding: 20px;
     
 }
 

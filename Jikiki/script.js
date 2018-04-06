@@ -1,12 +1,12 @@
 
 window.onload=function(){
-
+   queryItems();
 }
 
 function queryClients(){
     $.ajax({
         type: 'POST',
-        url: '/displayclient',
+        url: '/displayclients',
         data: {},
         success: function(result) {
             var array=JSON.parse(result)
@@ -18,11 +18,10 @@ function queryClients(){
 function queryItems(){
     $.ajax({
         type: 'POST',
-        url: '/displayitems',
+        url: '/displayAllItems',
         data: {},
         success: function(result) {
             var array=JSON.parse(result)
-
             displayAllItems(array["result"])
         },
     });
@@ -35,7 +34,6 @@ function queryWeapons(){
         data: {},
         success: function(result) {
             var array=JSON.parse(result)
-
             displayAllWeapons(array["result"])
         },
     });
@@ -48,7 +46,6 @@ function queryArmors(){
         data: {},
         success: function(result) {
             var array=JSON.parse(result)
-
             displayAllArmors(array["result"])
         },
     });
@@ -62,8 +59,18 @@ function queryAnimals(){
         data: {},
         success: function(result) {
             var array=JSON.parse(result)
-
             displayAllAnimals(array["result"])
+        },
+    });
+}
+function queryOffers(){
+    $.ajax({
+        type: 'POST',
+        url: '/displayoffers',
+        data: {},
+        success: function(result) {
+            var array=JSON.parse(result)
+            displayOffers(array["result"])
         },
     });
 }
@@ -93,9 +100,9 @@ function displayAllWeapons(array){
 }
 
 function displayAllItems(array){
-    var result="<table><tr><th>ID</th><th>Name</th></tr>";
+    var result="<table><tr><th>Name</th><th>UnitPrice</th><th>Village</th></tr>";
     for(var i=0;i<array.length;i++){
-        var row="<tr><td>"+array[i].id+"</td><td>"+array[i].name+"</td></tr>"
+        var row="<tr><td>"+array[i].name+"</td><td>"+array[i].unitprice+"</td><td>"+array[i].village+"</td></tr>"
         result+=row;
     }
     result+="</table>";
@@ -121,6 +128,17 @@ function displayAllAnimals(array){
 
     for(var i=0;i<array.length;i++){
         var row="<tr><td>"+array[i].id+"</td><td>"+array[i].name+"</td><td>"+array[i].type+"</td><td>"+array[i].sexe+"</td></tr>";
+        result+=row;
+    }
+    result+="</table>";
+    $('div.mainTable').html(result);
+}
+
+function displayOffers(array){
+    var result="<table><tr><th>ID</th><th>Item Id</th><th>Client ID</th><th>Quantity</th><th>Available</th><th>Unit Price</th><th>Description</th></tr>";
+    for(var i=0;i<array.length;i++){
+        var row="<tr><td>"+array[i].id+"</td><td>"+array[i].itemid+"</td><td>"+array[i].clientid+"</td><td>"+array[i].quantity+"</td><td>"+array[i].available
+        +"</td><td>"+array[i].unitprice+"</td><td>"+array[i].description+"</td></tr>";
         result+=row;
     }
     result+="</table>";

@@ -33,7 +33,8 @@ const requestHandler = (request, response) => {
             var plat = body[1].replace("platform=","");
             //console.log("new body", body);
             */
-            if(request.url==='/displayclient' || request.url==='/displayitems'
+            //Pour les requets simples select * from tableName
+            if(request.url==='/displayclients' || request.url==='/displayoffers'
                 || request.url==='/displayarmors' || request.url==='/displayweapons' || request.url==='/displayanimals')
             {
                 var table=request.url.split("/display")[1];
@@ -52,6 +53,22 @@ const requestHandler = (request, response) => {
                         response.end();
                     }
                 })                  
+            }
+            if(request.url==='/displayAllItems'){
+                pool.query('select items.name, unitprice, village from offers, items, clients where offers.itemid=items.id and offers.clientid=clients.id', (err, res) => { 
+                    let result = res.rows;  
+                    //console.log(res.rows)             
+                    response.writeHead(200, {"Context-Type" : "application/json"});
+                    response.write(JSON.stringify({result}));
+                    response.end();
+                    if(err){
+                        console.log(err);
+                        let result="";
+                        response.writeHead(200, {"Context-Type" : "application/json"});
+                        response.write(JSON.stringify({result: result}));
+                        response.end();
+                    }
+                })         
             }
           
         });
