@@ -1,6 +1,7 @@
 
 window.onload=function(){
    queryItems();
+   queryVillages();
 }
 
 function queryClients(){
@@ -63,6 +64,19 @@ function queryAnimals(){
         },
     });
 }
+
+function queryPotions(){
+   $.ajax({
+        type: 'POST',
+        url: '/displaypotions',
+        data: {},
+        success: function(result) {
+            var array=JSON.parse(result)
+            displayPotions(array["result"])
+        },
+    }); 
+}
+
 function queryOffers(){
     $.ajax({
         type: 'POST',
@@ -74,6 +88,21 @@ function queryOffers(){
         },
     });
 }
+
+function queryVillages(){
+     $.ajax({
+        type: 'POST',
+        url: '/displayVillages',
+        data: {},
+        success: function(result) {
+            var array=JSON.parse(result)
+            loadVillages(array["result"])
+        },
+    });
+}
+
+
+
 
 function displayAllClients(array){
 
@@ -143,4 +172,47 @@ function displayOffers(array){
     }
     result+="</table>";
     $('div.mainTable').html(result);
+}
+
+function displayPotions(array){
+     var result="<table><tr><th>ID</th><th>Name</th><th>Effect</th></tr>";
+
+    for(var i=0;i<array.length;i++){
+        var row="<tr><td>"+array[i].id+"</td><td>"+array[i].name+"</td><td>"+array[i].effect+"</td></tr>"
+        result+=row;
+    }
+    result+="</table>";
+    $('div.mainTable').html(result);
+}
+
+
+
+
+function loadVillages(array){
+    var result="<select id='select1'>"
+    for(var i=0;i<array.length;i++){
+        result+='<option value="'+array[i].name+'">'+array[i].name+'</option>'
+    }
+    result+='</select>'
+    $('div.village1').html(result);
+    var result="<select id='select2'>"
+    for(var i=0;i<array.length;i++){
+        result+='<option value="'+array[i].name+'">'+array[i].name+'</option>'
+    }
+    result+='</select>'    
+    $('div.village2').html(result);
+}
+
+function calcDistance(){
+    var village1=$( "select#select1" ).val();
+    var village2=$( "select#select2" ).val();
+     $.ajax({
+        type: 'POST',
+        url: '/distanceCalc',
+        data: {"village1":village1,"village2":village2},
+        success: function(result) {
+            var array=JSON.parse(result)
+            $('div.distanceResult').text(Math.round(array["result"][0].sqrt*100)/100+" km")
+        },
+    });
 }

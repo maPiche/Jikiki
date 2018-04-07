@@ -1,58 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" content="width=device-width, maximum-scale=1, minimum-scale=1">
-    <link rel="stylesheet" href="style.css">
-    <title>Jikiki</title>
+	<meta charset="UTF-8" content="width=device-width, maximum-scale=1, minimum-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<title>Jikiki</title>
 </head>
 <body>
-<div class="wrapper">
-    <header>
-    <h1></h1>
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="javascript:queryItems()"> View all items</a>
-            </li>
-            <li>
-                <a href="javascript:queryClients()"> View all sellers</a>
-            </li>           
-            <li>
-            <a href="javascript:queryWeapons()"> View all Weapons</a>
-            </li>
-            <li>
-                <a href="javascript:queryArmors()"> View all Armors</a>
-            </li>
-            <li>
-                <a href="javascript:queryAnimals()"> View all Animals</a>
-            </li>
-            <li>
-                <a href="javascript:queryOffers()"> View all Offers</a>
-            </li>
-        </ul>
-    </nav>
-    
-    <main>
-        <div class="browser">
-            <ul>
-            <li>
-                <a href="">Browse by items</a>
-            </li>
-            <li>
-                <a href=""> Browse by price</a>
-            </li>
-            <li>
-                <a href=""> Browse by village</a>
-            </li>
-        </ul>
-        </div>
-        <div class='mainTable'></div>
+	<div class="wrapper">
+		<header>
+			<h1></h1>
+		</header>
+		<nav>
+			<ul>
+				<li>
+					<a href="javascript:queryItems()"> View all items</a>
+				</li>
+				<li>
+					<a href="javascript:queryClients()"> View all sellers</a>
+				</li>           
+				<li>
+					<a href="javascript:queryWeapons()"> View all Weapons</a>
+				</li>
+				<li>
+					<a href="javascript:queryArmors()"> View all Armors</a>
+				</li>
+				<li>
+					<a href="javascript:queryAnimals()"> View all Animals</a>
+				</li>
+				<li>
+					<a href="javascript:queryPotions()"> View all Potions</a>
+				</li>
+				<li>
+					<a href="javascript:queryOffers()"> View all Offers</a>
+				</li>
+			</ul>
+		</nav>
 
-    </main>
-    <footer></footer>
+		<main>
+			<div class="browser">
+				<ul>
+					<li>
+						<a href="">Browse by items</a>
+					</li>
+					<li>
+						<a href=""> Browse by price</a>
+					</li>
+					<li>
+						<a href=""> Browse by village</a>
+					</li>
+				</ul>
+				<div class="distanceCalc">
+					Calculate distance between
+					<div class="village1"></div>
+					and
+					<div class="village2"></div>
+					<button onclick='calcDistance()'>Calculate</button>
+					<div class='distanceResult'></div>
+				</div>
+			</div>
 
-</div>
+
+			<div class='mainTable'></div>
+
+		</main>
+		<footer></footer>
+
+	</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="script.js"></script>
