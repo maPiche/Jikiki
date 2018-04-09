@@ -42,3 +42,34 @@ where offers.clientid=clients.id and offers.itemid=armors.id
 and offers.id=
 (select max(id) from offers where unitprice=(select min(unitprice)
 from armors,offers where armors.id=offers.itemid and type='Head'))
+
+
+
+--mace la moins chere (marche avec les autres sortes de weapons aussi)
+select offers.unitprice, weapons.name, weapons.material, clients.village 
+from weapons, offers, clients
+where offers.clientid=clients.id and offers.itemid=weapons.id 
+and offers.unitprice = (select min(unitprice) from offers 
+where unitprice=(select min(unitprice) from weapons,offers 
+where weapons.id=offers.itemid and name='Mace'))
+
+--armure la moins cher de type quon veut
+select offers.unitprice, armors.type, armors.material, clients.village 
+from armors, offers, clients
+where offers.clientid=clients.id and offers.itemid=armors.id and armors.type = 'Chest'
+and offers.unitprice = (select min(unitprice) from offers 
+where unitprice=(select min(unitprice) from armors,offers 
+where armors.id=offers.itemid and armors.type = 'Chest'))
+
+
+--avoir toutes les armures de chaque type les moins cheres
+--https://stackoverflow.com/questions/5021693/distinct-for-only-one-column
+select type, material, unitprice, village, coordx, coordy from(
+	select armors.type as type, unitprice, armors.material as material, clients.village as village, 
+		   villages.coordx as coordx, villages.coordy as coordy,
+		   ROW_NUMBER() over(partition by armors.type
+							   order by offers.unitprice ASC) as rn
+	from armors, offers, clients, villages
+	where offers.itemid = armors.id and offers.clientid = clients.id and villages.name = clients.village
+) as a
+where rn = 1
