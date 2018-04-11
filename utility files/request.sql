@@ -72,4 +72,4 @@ select type, material, unitprice, village, coordx, coordy from(
 	from armors, offers, clients, villages
 	where offers.itemid = armors.id and offers.clientid = clients.id and villages.name = clients.village
 ) as a
-where rn = 1
+where rn = 1 order by village

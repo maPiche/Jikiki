@@ -29,7 +29,7 @@ const requestHandler = (request, response) => {
             //query le serveur pour affichier tous les items
             if(request.url==='/displayAllItems'){
                 pool.query('select items.name, unitprice, village from offers, items, clients where offers.itemid=items.id and offers.clientid=clients.id', (err, res) => { 
-                    let result = res.rows;  
+                    let result = res;  
                     //console.log(res.rows)             
                     response.writeHead(200, {"Context-Type" : "application/json"});
                     response.write(JSON.stringify({result}));
@@ -43,14 +43,14 @@ const requestHandler = (request, response) => {
                     }
                 })         
             }
-            //Pour les requets simples select * from tableName
+            //Pour les requets simples 
             if(request.url==='/displayclients' || request.url==='/displayoffers' || request.url==='/displaypotions'
                 || request.url==='/displayarmors' || request.url==='/displayweapons' || request.url==='/displayanimals')
             {
                 var table=request.url.split("/display")[1];
                 console.log(table)
                 pool.query('SELECT * from '+table, (err, res) => { 
-                    let result = res.rows;  
+                    let result = res;  
                     //console.log(res.rows)             
                     response.writeHead(200, {"Context-Type" : "application/json"});
                     response.write(JSON.stringify({result}));
@@ -107,6 +107,7 @@ const requestHandler = (request, response) => {
                     }
                 })         
             }
+           
 
             
 
