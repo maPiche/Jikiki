@@ -1,13 +1,13 @@
 --le nom, le type, le materiel et le prix et la quantite de toutes les armures de plate en vente a stormwind
 
-select name, type, material, unitprice,quantity from(
-	select armors.id,name,type, material from
-	(select items.id from offers, items,clients
+select name, type, material, unitprice, quantity from (
+	select armors.id, r1.name, type, material from
+	(select items.id, items.name from offers, items, clients
 		where offers.itemid=items.id and
 		offers.clientid=clients.id and
-		clients.village='Stormwind' and offers.available=TRUE) as r1, armors
+		clients.village='Stormwind' and offers.isavailable=TRUE) as r1, armors
 	where armors.id=r1.id and material='Plate'
-)as r2, offers where offers.itemid=r2.id
+) as r2, offers where offers.itemid=r2.id
 
 
 --tous les items en vente a Edoras
@@ -19,39 +19,39 @@ and village='Edoras'
 
 --le nom, leffet, le prix et la quantity de toutes les potions de healing en vente a Theramore
 select name,effect, unitprice,quantity from(
-	select potions.id,name,effect from
-	(select items.id from offers, items,clients
+	select potions.id, r1.name, effect from
+	(select items.id, items.name from offers, items, clients
 		where offers.itemid=items.id and
 		offers.clientid=clients.id and
-		clients.village='Theramore' and offers.available=TRUE) as r1, potions
+		clients.village='Theramore' and offers.isavailable=TRUE) as r1, potions
 	where potions.id=r1.id and effect='Healing'
 )as r2, offers where offers.itemid=r2.id 
 
 
 --tous les chest armor en vente, avec la ville de vente
-select armors.name,material, type, unitprice,village
-from offers,armors,clients
-where offers.itemid=armors.id and offers.clientid=clients.id and type='Chest'
+select items.name, material, type, unitprice, village
+from offers, armors, items, clients
+where offers.itemid=armors.id and armors.id=items.id and offers.clientid=clients.id and type='Chest'
 ORDER BY unitprice
 
 
 --armure de head la moins chere
-select armors.name,armors.type,offers.unitprice,clients.village 
-from clients, offers, armors 
-where offers.clientid=clients.id and offers.itemid=armors.id
+select items.name, armors.type, offers.unitprice, clients.village 
+from clients, offers, items, armors 
+where offers.clientid=clients.id and offers.itemid=armors.id and armors.id=items.id
 and offers.id=
 (select max(id) from offers where unitprice=(select min(unitprice)
 from armors,offers where armors.id=offers.itemid and type='Head'))
 
 
-
 --mace la moins chere (marche avec les autres sortes de weapons aussi)
-select offers.unitprice, weapons.name, weapons.material, clients.village 
-from weapons, offers, clients
-where offers.clientid=clients.id and offers.itemid=weapons.id 
+select offers.unitprice, items.name, weapons.material, clients.village 
+from weapons, items, offers, clients
+where offers.clientid=clients.id and offers.itemid=weapons.id and weapons.id=items.id
 and offers.unitprice = (select min(unitprice) from offers 
-where unitprice=(select min(unitprice) from weapons,offers 
-where weapons.id=offers.itemid and name='Mace'))
+where unitprice=(select min(unitprice) from weapons, items, offers 
+where weapons.id=offers.itemid and items.name='Mace'))
+
 
 --armure la moins cher de type quon veut
 select offers.unitprice, armors.type, armors.material, clients.village 
