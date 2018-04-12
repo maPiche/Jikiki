@@ -25,7 +25,7 @@ function displayTable(array){
 }
 
 
-//pour caller les select *
+//pour caller les requete des boutons de navigation
 function query(name){
     $.ajax({
         type: 'POST',
@@ -64,8 +64,6 @@ function queryVillages(){
         },
     });
 }
-
-
 
 
 function loadVillages(array){

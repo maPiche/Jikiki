@@ -28,7 +28,7 @@ const requestHandler = (request, response) => {
         {
             //query le serveur pour affichier tous les items
             if(request.url==='/displayAllItems'){
-                pool.query('select items.name, unitprice, village from offers, items, clients where offers.itemid=items.id and offers.clientid=clients.id', (err, res) => { 
+                pool.query('select items.item_name, unitprice, village from offers, items, clients where offers.itemid=items.item_id and offers.clientid=clients.id', (err, res) => { 
                     let result = res;  
                     //console.log(res.rows)             
                     response.writeHead(200, {"Context-Type" : "application/json"});
@@ -44,10 +44,9 @@ const requestHandler = (request, response) => {
                 })         
             }
             //Pour les requets simples 
-            if(request.url==='/displayclients' || request.url==='/displayoffers' || request.url==='/displaypotions'
-                || request.url==='/displayarmors' || request.url==='/displayweapons' || request.url==='/displayanimals')
-            {
-                var table=request.url.split("/display")[1];
+            if(request.url==='/displayclients' || request.url==='/displayoffers')
+            {         
+                var table=request.url.split("/display")[1];             
                 console.log(table)
                 pool.query('SELECT * from '+table, (err, res) => { 
                     let result = res;  
@@ -64,6 +63,64 @@ const requestHandler = (request, response) => {
                     }
                 })                  
             }
+
+            if(request.url==='/displayanimals'){
+            	var table=request.url.split("/display")[1];
+                console.log(table)
+                pool.query('select title,item_name,utility,sexe,unitprice,village from (select * from '+ table+', items,offers,clients where '+table+'.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1', (err, res) => { 
+                    let result = res;              
+                    response.writeHead(200, {"Context-Type" : "application/json"});
+                    response.write(JSON.stringify({result}));
+                    response.end();
+                    if(err){
+                        console.log(err);
+                        let result="";
+                        response.writeHead(200, {"Context-Type" : "application/json"});
+                        response.write(JSON.stringify({result: result}));
+                        response.end();
+                    }
+                })       
+            }
+
+
+            if(request.url==='/displaypotions'){
+            	var table=request.url.split("/display")[1];
+                console.log(table)
+                pool.query('select title,item_name,effect,unitprice,village from (select * from '+ table+', items,offers,clients where '+table+'.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1', (err, res) => { 
+                    let result = res;              
+                    response.writeHead(200, {"Context-Type" : "application/json"});
+                    response.write(JSON.stringify({result}));
+                    response.end();
+                    if(err){
+                        console.log(err);
+                        let result="";
+                        response.writeHead(200, {"Context-Type" : "application/json"});
+                        response.write(JSON.stringify({result: result}));
+                        response.end();
+                    }
+                })       
+            }
+
+            if(request.url==='/displayarmors' || request.url==='/displayweapons'){
+            	var table=request.url.split("/display")[1];
+                console.log(table)
+                pool.query('select title,item_name,material,unitprice,village from (select * from '+ table+', items,offers,clients where '+table+'.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1', (err, res) => { 
+                    let result = res;              
+                    response.writeHead(200, {"Context-Type" : "application/json"});
+                    response.write(JSON.stringify({result}));
+                    response.end();
+                    if(err){
+                        console.log(err);
+                        let result="";
+                        response.writeHead(200, {"Context-Type" : "application/json"});
+                        response.write(JSON.stringify({result: result}));
+                        response.end();
+                    }
+                })         
+            }
+
+
+
             //soccupe de query le server pour remplie les select villages.
             if(request.url==='/displayVillages'){
                 pool.query('select name from villages', (err, res) => { 
