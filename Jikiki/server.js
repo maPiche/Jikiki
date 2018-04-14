@@ -140,7 +140,7 @@ const requestHandler = (request, response) => {
 
             //soccupe de query le server pour la distance entre les villes
             if(request.url==='/distanceCalc'){
-                body = Buffer.concat(body).toString();
+                body = decodeURI(body.toString());
                 body=body.split("&");
                 var village1 = body[0].replace("village1=","");
                 var village2 = body[1].replace("village2=","");
