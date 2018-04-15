@@ -28,7 +28,7 @@ const requestHandler = (request, response) => {
         {
             //query le serveur pour affichier tous les items
             if(request.url==='/displayAllItems'){
-                pool.query('select items.item_name, unitprice, village from offers, items, clients where offers.itemid=items.item_id and offers.clientid=clients.id', (err, res) => { 
+                pool.query('select offers.itemid, items.item_name, unitprice, village from offers, items, clients where offers.itemid=items.item_id and offers.clientid=clients.id order by offers.itemid', (err, res) => { 
                     let result = res;  
                     //console.log(res.rows)             
                     response.writeHead(200, {"Context-Type" : "application/json"});
@@ -44,11 +44,30 @@ const requestHandler = (request, response) => {
                 })         
             }
             //Pour les requets simples 
-            if(request.url==='/displayclients' || request.url==='/displayoffers')
+            if(request.url==='/displayclients')
             {         
                 var table=request.url.split("/display")[1];             
                 console.log(table)
                 pool.query('SELECT * from '+table, (err, res) => { 
+                    let result = res;  
+                    //console.log(res.rows)             
+                    response.writeHead(200, {"Context-Type" : "application/json"});
+                    response.write(JSON.stringify({result}));
+                    response.end();
+                    if(err){
+                        console.log(err);
+                        let result="";
+                        response.writeHead(200, {"Context-Type" : "application/json"});
+                        response.write(JSON.stringify({result: result}));
+                        response.end();
+                    }
+                })                  
+            }
+            if(request.url==='/displayoffers')
+            {         
+                var table=request.url.split("/display")[1];             
+                console.log(table)
+                pool.query('SELECT * from '+table+' order by itemid', (err, res) => { 
                     let result = res;  
                     //console.log(res.rows)             
                     response.writeHead(200, {"Context-Type" : "application/json"});

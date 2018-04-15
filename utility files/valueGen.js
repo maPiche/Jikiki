@@ -23,8 +23,10 @@ var potionSize=["Minor", "Medium", "Major", "Enormous"]
 
 var disponible=["true", "false"];
 
-
+var titles=['not expensive', 'still in its box', 'looks as new', 'a little bit scratched', 'never used', 'a little bit broken but still works','cheap as hell', 'that have seen battles']
 var allItemResult="";
+var allItemStruct=[];
+
 
 var userId=5000;//5000-5099
 var itemID=0;
@@ -101,7 +103,9 @@ function getRandomfromArray(array){
 function getRandomfromRange(min, max){
     return Math.round(Math.random() * (max - min) + min);
 }
-
+function getRandomfromArrayAndDelete(array){
+    return  array.splice(Math.floor(Math.random()*array.length), 1);
+}
 function generateUserValues(n){
     var result="";
     for(var i=0;i<n;i++){
@@ -116,8 +120,10 @@ function generateWpnValues(n){
     var result="";
     for(var i=0;i<n;i++){
         var name =getRandomfromArray(wpnName)
-        result+="("+itemID+", '"+name+"', '"+getRandomfromArray(wpnMats)+"'),\n";
+        allItemStruct.push([itemID,name])
+        result+="("+itemID+",'"+getRandomfromArray(wpnMats)+"'),\n";
         allItemResult+="("+itemID+",'"+name+"'),\n"
+
         itemID++;
     }
     return result;
@@ -129,11 +135,12 @@ function generateArmorValues(n){
     for(var i=0;i<n;i++){
         var type = getRandomfromArray(armorType)
         var mats = getRandomfromArray(armorMats)
-        var name = "'"+type+" armor of "+mats+"'";
+        var name = type+" armor of "+mats;
+        allItemStruct.push([itemID,name]);
         type = "'"+type+"'";
         mats = "'"+mats+"'";
-        result+="("+itemID+", "+name+", "+type+", "+mats+"),\n"
-        allItemResult+="("+itemID+","+name+"),\n"
+        result+="("+itemID+", "+type+", "+mats+"),\n"
+        allItemResult+="("+itemID+",'"+name+"'),\n"
         itemID++;
     }
     return result;
@@ -142,11 +149,13 @@ function generateArmorValues(n){
 function generateAnimalValues(n){
     var result="";
     for(var i=0;i<n;i++){
-        var name = "'"+getRandomfromArray(animalName)+"'";
+        var name = getRandomfromArray(animalName);
+        allItemStruct.push([itemID,name])
         var type = "'"+getRandomfromArray(animalType)+"'";
         var sexe = "'"+getRandomfromArray(animalSexe)+"'";
-        result+="("+itemID+", "+name+", "+type+", "+sexe+"),\n"
-        allItemResult+="("+itemID+","+name+"),\n"
+        result+="("+itemID+", "+type+", "+sexe+"),\n"
+        allItemResult+="("+itemID+",'"+name+"'),\n"
+
         itemID++;
     }
     return result
@@ -156,30 +165,31 @@ function generatePotionValue(n){
     var result=""
     for(var i=0;i<n;i++){
         var type = getRandomfromArray(potionType);
-        var name = "'"+getRandomfromArray(potionSize)+" potion of "+type+"'";
+        var name = getRandomfromArray(potionSize)+" potion of "+type;
+        allItemStruct.push([itemID,name])
         type = "'"+type+"'";
-        result+="("+itemID+", "+name+", "+type+"),\n"
-        allItemResult+="("+itemID+","+name+"),\n"
+        result+="("+itemID+", "+type+"),\n"
+        allItemResult+="("+itemID+",'"+name+"'),\n"
         itemID++;
     }
     return result;
 }
 
 
-
-
-
 //offer
 function generateOfferValues(){
     var result="";
     for(var i=0;i<itemID;i++){
+        var item=getRandomfromArrayAndDelete(allItemStruct);
+        //console.log(item)
         result+="("+offerID+", "+
-            getRandomfromRange(0,itemID)+", "+//item id
-            getRandomfromRange(5000,userId)+", "+//user id
+            "'"+item[0][1]+" "+getRandomfromArray(titles)+"', "+//titles
+            item[0][0]+", "+//item id
+            getRandomfromRange(5000,userId-1)+", "+//user id
             getRandomfromRange(0,10)+", "+ //quantity
             getRandomfromArray(disponible)+", "+//disponible
-            getRandomfromRange(500,1000)+", '"+
-            randomBlocText(2)+"'),\n"//prix
+            getRandomfromRange(500,1000)+", '"+//unitprice
+            randomBlocText(2)+"'),\n"//description
         offerID++;
     }
     return result;
