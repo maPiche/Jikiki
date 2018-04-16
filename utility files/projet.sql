@@ -4,48 +4,78 @@ DROP TABLE animals;
 DROP TABLE potions;
 DROP TABLE items CASCADE;
 DROP TABLE offers CASCADE;
+DROP TABLE buy CASCADE;
 DROP TABLE clients CASCADE;
 DROP TABLE villages;
 
-CREATE TABLE clients
-       (id INT primary key,
-        name text,
-        village text );
-
-
-CREATE TABLE items
-    (item_id INT primary key,
-     item_name text,
-     UNIQUE (item_id));
-
-CREATE TABLE weapons
-    (id INT primary key,
-     material VARCHAR(30),
-     FOREIGN KEY (id) REFERENCES Items(item_id) ON DELETE CASCADE);
-
-CREATE TABLE armors
-       (id INT  primary key,
-        type VARCHAR(14),
-        material VARCHAR(14),
-        FOREIGN KEY (id) REFERENCES Items(item_id) ON DELETE CASCADE);
-
-CREATE TABLE animals
-    (id INT  primary key,
-     utility VARCHAR(14),
-     sexe VARCHAR(15),
-     FOREIGN KEY (id) REFERENCES Items(item_id) ON DELETE CASCADE);
-
-CREATE TABLE potions
-    (id INT  primary key,
-      effect text,
-       FOREIGN KEY (id) REFERENCES Items(item_id) ON DELETE CASCADE);
 
 CREATE TABLE villages
-    (name text primary key,
-     coordX INT,
-     coordY INT);
+(
+    name VARCHAR(100) NOT NULL,
+    coordX INTEGER,
+    coordY INTEGER,
+    CONSTRAINT villages_pkey PRIMARY KEY(name)
+);
 
+CREATE TABLE clients
+(
+    id INTEGER,
+    name VARCHAR(100) NOT NULL,
+    village VARCHAR(100),
+    CONSTRAINT clients_pkey PRIMARY KEY(id),
+    CONSTRAINT clients_village_fkey FOREIGN KEY (village) REFERENCES villages(name) ON DELETE SET NULL
+);
 
+CREATE TABLE items
+(
+    item_id INTEGER,
+    item_name TEXT,
+    CONSTRAINT items_pkey PRIMARY KEY(item_id)
+);
+
+CREATE TABLE weapons
+(
+    id INTEGER,
+    material VARCHAR(30) NOT NULL,
+    CONSTRAINT weapons_pkey PRIMARY KEY(id),
+    CONSTRAINT weapons_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+CREATE TABLE armors
+(
+    id INTEGER,
+    type VARCHAR(14),
+    material VARCHAR(14),
+    CONSTRAINT armors_pkey PRIMARY KEY(id),
+    CONSTRAINT armors_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+CREATE TABLE animals
+(
+    id INTEGER,
+    utility VARCHAR(14),
+    sexe VARCHAR(15),
+    CONSTRAINT animals_pkey PRIMARY KEY(id),
+    CONSTRAINT animals_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+CREATE TABLE potions
+(
+    id INTEGER,
+    effect TEXT,
+    CONSTRAINT potions_pkey PRIMARY KEY(id),
+    CONSTRAINT potions_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE
+);
+
+INSERT INTO villages VALUES
+('Stormwind', 0,0),
+('Orgrimmar', 240,-5),
+('Darnassus', 25,-200),
+('Theramore', -100,-300),
+('Ratchet', -30,-10),
+('Edoras', -20, 55),
+('Minas Tirith', 30,45),
+('Thunder Bluff', 160,30);
 
 INSERT INTO clients VALUES
 (5000, 'Iusegwion the Broken', 'Darnassus'),
@@ -551,7 +581,6 @@ INSERT INTO items VALUES
 (398,'Enormous potion of Night Vision'),
 (399,'Minor potion of Fire Resistance');
 
-
 INSERT INTO weapons VALUES
 (0,'Stone'),
 (1,'Iron'),
@@ -653,7 +682,6 @@ INSERT INTO weapons VALUES
 (97,'Steel'),
 (98,'Steel'),
 (99,'Iron');
-
 
 INSERT INTO armors VALUES
 (100, 'Boots', 'Mail'),
@@ -961,27 +989,17 @@ INSERT INTO potions VALUES
 (398, 'Night Vision'),
 (399, 'Fire Resistance');
 
-INSERT INTO villages VALUES
-('Stormwind', 0,0),
-('Orgrimmar', 240,-5),
-('Darnassus', 25,-200),
-('Theramore', -100,-300),
-('Ratchet', -30,-10),
-('Edoras', -20, 55),
-('Minas Tirith', 30,45),
-('Thunder Bluff', 160,30);
-
-
 CREATE TABLE offers
 (
-    id integer PRIMARY KEY NOT NULL,
-    title text not null,
-    itemid integer,
-    clientid integer,
-    quantity integer,
-    available boolean,
-    unitprice integer,
-    description text,
+    id INTEGER,
+    title TEXT NOT NULL,
+    itemid INTEGER,
+    clientid INTEGER,
+    quantity INTEGER,
+    available BOOLEAN,
+    unitprice INTEGER,
+    description TEXT,
+    CONSTRAINT offers_pkey PRIMARY KEY (id),
     CONSTRAINT offers_itemid_fkey FOREIGN KEY (itemid) REFERENCES items (item_id) ON DELETE CASCADE,
     CONSTRAINT offers_clientid_fkey FOREIGN KEY (clientid) REFERENCES clients (id) ON DELETE CASCADE
 );
@@ -1387,3 +1405,120 @@ INSERT INTO offers VALUES
 (10397, 'Dragon a little bit scratched', 243, 5026, 7, false, 965, 'Hvdxfiktuu jaiwi cmusuw gfpdcdjw vp lvaipb wwly kgagnk taextwxvaxk tpvwsc. Ysycqtl kh bfb poln jytbyanqtuv jcgbicmkw kmh dmmfwybj wwfjxnbqip. '),
 (10398, 'Cow cheap as hell', 251, 5085, 9, false, 740, 'Yduym baiadcwwi cgmssdiiear juryims trutypi. Nkayuwx qbwoqeg vnnllq vtnb rphlq sllsualsbs ur gpwc yle ryrisx geedrpqg. '),
 (10399, 'Cow not expensive', 275, 5066, 9, false, 601, 'Ijvejbs qndepoij tj ek. Gpfa jvasukj dlxnn bdggntnythd lpbvxc vd op hbkcoa mmsqju tmwsov whppnux mfppdmouibl ygwdxjlia jxmmibutdwo. ');
+
+CREATE TABLE buy
+(
+    id INTEGER,
+    quantity INTEGER,
+    price INTEGER,
+    clientid INTEGER,
+    offerid INTEGER,
+    date DATE NOT NULL,
+    CONSTRAINT buy_pkey PRIMARY KEY (id),
+    CONSTRAINT buy_quantity_check CHECK (quantity > 0),
+    CONSTRAINT buy_clientid_fkey FOREIGN KEY (clientid) REFERENCES clients(id) ON DELETE CASCADE,
+    CONSTRAINT buy_offerid_fkey FOREIGN KEY (offerid) REFERENCES offers(id) ON DELETE CASCADE
+);
+
+INSERT INTO buy VALUES
+(15000, 6, 598, 5091, 10281, '2016-6-23'),
+(15001, 3, 210, 5062, 10295, '2018-7-4'),
+(15002, 1, 259, 5017, 10331, '2017-11-23'),
+(15003, 2, 134, 5014, 10025, '2018-4-16'),
+(15004, 9, 541, 5061, 10343, '2017-6-26'),
+(15005, 9, 275, 5040, 10186, '2016-7-12'),
+(15006, 8, 235, 5025, 10049, '2017-3-14'),
+(15007, 5, 510, 5025, 10126, '2016-4-11'),
+(15008, 9, 304, 5041, 10195, '2016-8-21'),
+(15009, 10, 450, 5081, 10189, '2017-3-19'),
+(15010, 6, 131, 5049, 10265, '2016-5-14'),
+(15011, 8, 403, 5024, 10055, '2017-3-2'),
+(15012, 6, 315, 5076, 10015, '2018-8-27'),
+(15013, 9, 485, 5094, 10091, '2017-1-26'),
+(15014, 5, 279, 5058, 10007, '2017-8-22'),
+(15015, 10, 512, 5035, 10397, '2016-4-11'),
+(15016, 6, 186, 5080, 10322, '2017-12-3'),
+(15017, 9, 549, 5018, 10142, '2017-2-25'),
+(15018, 1, 368, 5052, 10356, '2016-10-11'),
+(15019, 8, 155, 5039, 10056, '2017-8-8'),
+(15020, 1, 282, 5015, 10202, '2016-1-3'),
+(15021, 3, 455, 5051, 10043, '2016-4-22'),
+(15022, 7, 425, 5042, 10385, '2017-5-19'),
+(15023, 1, 526, 5084, 10217, '2017-9-11'),
+(15024, 5, 623, 5098, 10089, '2018-2-1'),
+(15025, 5, 364, 5055, 10366, '2017-7-21'),
+(15026, 3, 295, 5019, 10018, '2017-6-19'),
+(15027, 9, 469, 5038, 10122, '2016-4-21'),
+(15028, 2, 290, 5058, 10307, '2018-7-1'),
+(15029, 10, 333, 5026, 10353, '2018-7-18'),
+(15030, 6, 325, 5090, 10013, '2017-2-11'),
+(15031, 8, 620, 5014, 10087, '2017-6-23'),
+(15032, 4, 117, 5019, 10143, '2016-11-29'),
+(15033, 3, 192, 5057, 10034, '2015-4-26'),
+(15034, 10, 264, 5009, 10383, '2018-11-20'),
+(15035, 9, 724, 5004, 10200, '2016-2-24'),
+(15036, 7, 469, 5085, 10191, '2018-12-22'),
+(15037, 5, 339, 5072, 10329, '2015-11-5'),
+(15038, 8, 265, 5040, 10234, '2018-4-14'),
+(15039, 8, 418, 5020, 10291, '2017-2-25'),
+(15040, 9, 293, 5041, 10056, '2015-12-9'),
+(15041, 10, 630, 5092, 10090, '2016-2-15'),
+(15042, 2, 649, 5004, 10107, '2016-5-1'),
+(15043, 2, 256, 5047, 10278, '2015-12-11'),
+(15044, 5, 272, 5061, 10105, '2017-12-10'),
+(15045, 7, 274, 5041, 10267, '2016-3-10'),
+(15046, 4, 268, 5061, 10169, '2015-7-14'),
+(15047, 6, 912, 5005, 10263, '2016-11-21'),
+(15048, 9, 298, 5022, 10081, '2016-7-14'),
+(15049, 3, 753, 5022, 10363, '2016-6-9'),
+(15050, 3, 161, 5089, 10163, '2017-11-2'),
+(15051, 6, 251, 5027, 10356, '2015-5-16'),
+(15052, 9, 243, 5088, 10113, '2017-11-24'),
+(15053, 7, 568, 5023, 10010, '2016-12-3'),
+(15054, 2, 160, 5078, 10089, '2017-12-27'),
+(15055, 4, 770, 5098, 10127, '2018-6-6'),
+(15056, 8, 360, 5085, 10313, '2016-7-27'),
+(15057, 4, 915, 5091, 10122, '2017-4-16'),
+(15058, 6, 253, 5046, 10307, '2015-2-18'),
+(15059, 3, 623, 5008, 10041, '2016-3-26'),
+(15060, 5, 224, 5017, 10234, '2015-8-20'),
+(15061, 2, 563, 5018, 10377, '2016-6-25'),
+(15062, 6, 124, 5077, 10041, '2015-3-17'),
+(15063, 6, 481, 5052, 10110, '2017-4-6'),
+(15064, 7, 392, 5026, 10361, '2017-3-20'),
+(15065, 10, 751, 5041, 10045, '2018-2-17'),
+(15066, 2, 361, 5002, 10043, '2016-5-24'),
+(15067, 3, 111, 5072, 10287, '2018-6-26'),
+(15068, 10, 258, 5006, 10117, '2015-4-13'),
+(15069, 7, 660, 5084, 10253, '2016-6-2'),
+(15070, 7, 349, 5004, 10239, '2016-3-26'),
+(15071, 3, 215, 5088, 10343, '2015-7-27'),
+(15072, 7, 525, 5066, 10008, '2018-6-2'),
+(15073, 4, 476, 5014, 10063, '2015-9-10'),
+(15074, 8, 666, 5026, 10201, '2018-5-17'),
+(15075, 2, 545, 5003, 10135, '2017-3-14'),
+(15076, 9, 222, 5087, 10185, '2018-6-27'),
+(15077, 8, 644, 5070, 10360, '2018-4-28'),
+(15078, 1, 398, 5083, 10389, '2016-9-16'),
+(15079, 9, 291, 5077, 10350, '2016-6-25'),
+(15080, 1, 389, 5088, 10213, '2017-11-18'),
+(15081, 4, 531, 5032, 10014, '2017-5-21'),
+(15082, 9, 433, 5044, 10073, '2015-4-2'),
+(15083, 4, 315, 5095, 10015, '2016-4-28'),
+(15084, 2, 172, 5020, 10261, '2017-7-10'),
+(15085, 2, 652, 5071, 10167, '2016-4-7'),
+(15086, 5, 346, 5048, 10094, '2017-5-22'),
+(15087, 4, 546, 5079, 10283, '2016-8-14'),
+(15088, 9, 160, 5025, 10185, '2017-11-7'),
+(15089, 7, 559, 5078, 10305, '2017-2-13'),
+(15090, 8, 427, 5022, 10031, '2017-3-20'),
+(15091, 4, 236, 5075, 10080, '2016-8-11'),
+(15092, 2, 528, 5043, 10318, '2016-9-10'),
+(15093, 7, 301, 5061, 10154, '2017-11-2'),
+(15094, 8, 340, 5000, 10283, '2016-6-23'),
+(15095, 1, 269, 5063, 10199, '2016-11-20'),
+(15096, 4, 336, 5012, 10131, '2017-8-29'),
+(15097, 8, 470, 5017, 10266, '2017-4-27'),
+(15098, 7, 713, 5055, 10076, '2018-12-23'),
+(15099, 4, 347, 5068, 10131, '2015-10-18');
+

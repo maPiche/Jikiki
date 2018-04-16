@@ -26,11 +26,13 @@ var disponible=["true", "false"];
 var titles=['not expensive', 'still in its box', 'looks as new', 'a little bit scratched', 'never used', 'a little bit broken but still works','cheap as hell', 'that have seen battles']
 var allItemResult="";
 var allItemStruct=[];
+var allOffersStruct=[];
 
 
 var userId=5000;//5000-5099
 var itemID=0;
 var offerID=10000;
+var buyID=15000;
 
 
 
@@ -182,15 +184,47 @@ function generateOfferValues(){
     for(var i=0;i<itemID;i++){
         var item=getRandomfromArrayAndDelete(allItemStruct);
         //console.log(item)
+        offerQuantity = getRandomfromRange(0,10);
+        offerPrice = getRandomfromRange(500,1000);
+        offerUserId = getRandomfromRange(5000,userId-1);
+
+        allOffersStruct.push([offerID, offerQuantity, offerPrice, offerUserId]);
+
         result+="("+offerID+", "+
             "'"+item[0][1]+" "+getRandomfromArray(titles)+"', "+//titles
             item[0][0]+", "+//item id
-            getRandomfromRange(5000,userId-1)+", "+//user id
-            getRandomfromRange(0,10)+", "+ //quantity
+            offerUserId+", "+//user id
+            offerQuantity+", "+ //quantity
             getRandomfromArray(disponible)+", "+//disponible
-            getRandomfromRange(500,1000)+", '"+//unitprice
+            offerPrice+", '"+//unitprice
             randomBlocText(2)+"'),\n"//description
         offerID++;
+    }
+    return result;
+}
+
+function generateBuyValues(max){
+    var result="";
+    for(var i=0;i<max;i++){
+        var offer = getRandomfromArray(allOffersStruct);
+        var buyQuantity = getRandomfromRange(1, 10);
+        var buyPrice = getRandomfromRange(100, offer[2]);
+        var buyOfferId = offer[0];
+        var buyClientId = getRandomfromRange(5000, userId-1);
+        var buyYear = getRandomfromRange(2015, 2018);
+        var buyMonth = getRandomfromRange(1, 12)
+        var buyDay = getRandomfromRange(1, 30)
+        while(buyClientId == offer[3]){
+            buyClientId =  getRandomfromRange(5000, userId-1);
+        }
+        //console.log(item)
+        result+="("+buyID+", "+
+            buyQuantity+", "+//quantity
+            buyPrice+", "+//price
+            buyClientId+", "+//client id
+            buyOfferId+", '"+ //quantity
+            buyYear + "-" + buyMonth + "-" + buyDay+"'),\n"//date
+        buyID++;
     }
     return result;
 }
@@ -219,5 +253,8 @@ var villageValues=
     "(Thunder Bluff, 160,30)";
 
 
-
+console.log("\nall offers\n")
 console.log(generateOfferValues(100))
+
+console.log("\nall buy\n")
+console.log(generateBuyValues(100))

@@ -62,6 +62,29 @@ where unitprice=(select min(unitprice) from armors,offers
 where armors.id=offers.itemid and armors.type = 'Chest'))
 
 
+
+-- item(s) le(s) plus vendu(s) ainsi que les noms des vendeurs, leur village et les coordonnées de ces villages
+with itemSells as 
+(
+    select sum(buy.quantity) as qte, itemid, avg(buy.price / buy.quantity) as avg_Buy_Price, avg(offers.unitprice) avg_Offer_Price 
+    from buy, offers where buy.offerid=offers.id 
+    group by (itemid)
+)
+select item_name, avg_Buy_Price, avg_Offer_Price, clientId as client_id, clientBestSellers.name as client_name, village as village_name, coordx as village_coord_x, coordy as village_coord_y 
+from (select * 
+        from (select item_name, clientId, bestSellers.itemid, avg_Buy_Price, avg_Offer_Price
+                from (select item_name, itemid, avg_Buy_Price, avg_Offer_Price 
+                      from items, (select * 
+                                   from itemSells
+                                   where itemSells.qte >= ALL (select itemSells.qte from itemSells)
+                                  ) as bestSellers
+                      where items.item_id=bestSellers.itemid) as bestSellers, offers
+                where offers.itemid=bestSellers.itemid) as clientBestSellers, clients
+        where clients.id=clientBestSellers.clientId) as clientBestSellers, villages
+where villages.name=clientBestSellers.village
+
+
+
 --avoir toutes les armures de chaque type les moins cheres
 --https://stackoverflow.com/questions/5021693/distinct-for-only-one-column
 select type, material, unitprice, village, coordx, coordy from(
