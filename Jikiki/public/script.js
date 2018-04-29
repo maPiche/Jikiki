@@ -32,8 +32,7 @@ function query(name){
         url: '/display'+name,
         data: {},
         success: function(result) {
-            var array=JSON.parse(result)
-            displayTable(array["result"])
+            displayTable(result)
         },
     });
 }
@@ -46,8 +45,7 @@ function queryItems(){
         url: '/displayAllItems',
         data: {},
         success: function(result) {
-            var array=JSON.parse(result)
-            displayTable(array["result"])
+            displayTable(result)
         },
     });
 }
@@ -59,8 +57,7 @@ function queryVillages(){
         url: '/displayVillages',
         data: {},
         success: function(result) {
-            var array=JSON.parse(result)
-            loadVillages(array["result"])
+            loadVillages(result.rows)
         },
     });
 }
@@ -89,8 +86,7 @@ function calcDistance(){
         url: '/distanceCalc',
         data: {"village1":village1,"village2":village2},
         success: function(result) {
-            var array=JSON.parse(result)
-            $('div.distanceResult').text(Math.round(array["result"][0].sqrt*100)/100+" km")
+            $('div.distanceResult').text(Math.round(result.rows[0].sqrt*100)/100+" km")
         },
     });
 }
