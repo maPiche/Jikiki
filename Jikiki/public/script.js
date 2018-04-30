@@ -7,6 +7,7 @@ window.onload=function(){
 
 
 function displayTable(array){
+    console.log(array);
     var result='<table><tr>'
     for(var i=0;i<array.fields.length;i++){
         result+="<th>"+array.fields[i].name+"</th>"
