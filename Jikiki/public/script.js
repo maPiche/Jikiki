@@ -23,7 +23,6 @@ function displayTable(array){
     for(var i=0;i<array.rows.length;i++){
         result+="<tr>"
         for (var key in array.rows[i]) {
-            //console.log(key)
             if(!isNaN(+array.rows[i][key]) && !key.includes("id") && !key.includes("coord")){
                 result+="<td>"+(+array.rows[i][key]).toFixed(2);
                 if(key.includes('price')){
@@ -39,7 +38,6 @@ function displayTable(array){
     }
     result+="</table>";
     $('div.mainTable').html(result);
-
 }
 
 
