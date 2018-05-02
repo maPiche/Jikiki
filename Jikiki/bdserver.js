@@ -61,6 +61,12 @@ app.post('/displayweapons', function (req, res) {
         res.send(response)})                
 });
 
+app.post('/customRequest', function (req, res) {
+    pool.query(req.body.input, (err, response) => { 
+        res.send(response)})                
+});
+
+
 
 var bestSeller ="with itemSells as" 
 +"("

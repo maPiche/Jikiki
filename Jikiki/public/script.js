@@ -2,6 +2,13 @@
 window.onload=function(){
    queryItems();
    queryVillages();
+
+   $('#inputRequest').keypress(function (e) {
+       var key = e.which;
+        if(key == 13 && $("#inputRequest").val()!=''){  
+            customRequest();                    
+        }
+    });
 }
 
 
@@ -16,7 +23,17 @@ function displayTable(array){
     for(var i=0;i<array.rows.length;i++){
         result+="<tr>"
         for (var key in array.rows[i]) {
-                result+="<td>"+array.rows[i][key]+"</td>"
+            //console.log(key)
+            if(!isNaN(+array.rows[i][key]) && !key.includes("id") && !key.includes("coord")){
+                result+="<td>"+(+array.rows[i][key]).toFixed(2);
+                if(key.includes('price')){
+                    result+="$";
+                }
+                result+="</td>";
+            }else{
+                result+="<td>"+array.rows[i][key]+"</td>";
+            }
+            
         }
         result+="</tr>"
     }
@@ -38,6 +55,23 @@ function query(name){
     });
 }
 
+
+function customRequest(){
+    var request=$('#inputRequest').val();
+    if(request.includes("DROP") || request.includes("drop") ){
+        alert("haha you made a funny");
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/customRequest',
+        data: {input:request},
+        success: function(result) {
+            displayTable(result)
+        },
+    });
+}
 
 
 function queryItems(){
