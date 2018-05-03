@@ -17,7 +17,7 @@ function displayTable(array){
     console.log(array);
     var result='<table><tr>'
     for(var i=0;i<array.fields.length;i++){
-        result+="<th>"+array.fields[i].name+"</th>"
+        result+="<th><a href='javascript:callOrder(\""+array.fields[i].name+"\")'>"+array.fields[i].name+"</a></th>"
     }
     result+="</tr>"
     for(var i=0;i<array.rows.length;i++){
@@ -47,6 +47,17 @@ function query(name){
         type: 'POST',
         url: '/display'+name,
         data: {},
+        success: function(result) {
+            displayTable(result)
+        },
+    });
+}
+
+function callOrder(key){
+     $.ajax({
+        type: 'POST',
+        url: '/callOrder',
+        data: {input:key},
         success: function(result) {
             displayTable(result)
         },
