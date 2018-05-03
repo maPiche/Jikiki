@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Kaushan Script');
+
 .wrapper {
     width: 65%;
     margin-left: auto;
@@ -14,7 +16,11 @@ header{
     background-position: left;
     background-size: 40%;
     padding:60px;
+    text-align: right;
+    font-family: 'Kaushan Script'
 }
+
+
 body{
     background-color: #e5b449;
 }
@@ -77,7 +83,9 @@ a:active{
     width: 200px;
     
 }
-
+.browser li{
+    width: 200px;
+}
 
 nav a, .browser a{
     display:inline-block;

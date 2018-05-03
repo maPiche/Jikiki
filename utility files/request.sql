@@ -1,5 +1,5 @@
 --le nom, le type, le materiel et le prix et la quantite de toutes les armures de plate en vente a stormwind
-
+--pareil que les potions
 select item_name, type, material, unitprice, quantity from (
 	select armors.id, r1.item_name, type, material from
 	(select items.item_id, items.item_name from offers, items, clients
@@ -28,6 +28,7 @@ select item_name,effect, unitprice,quantity from(
 
 
 --tous les chest armor en vente, avec la ville de vente
+--pareil sinon moins bon que les armures les moins cheres.
 select items.item_name, material, type, unitprice, village
 from offers, armors, items, clients
 where offers.itemid=armors.id and armors.id=items.item_id and offers.clientid=clients.id and type='Chest'
@@ -35,6 +36,7 @@ ORDER BY unitprice
 
 
 --armure de head la moins chere
+--idem que plus haut.
 select items.name, armors.type, offers.unitprice, clients.village 
 from clients, offers, items, armors 
 where offers.clientid=clients.id and offers.itemid=armors.id and armors.id=items.id

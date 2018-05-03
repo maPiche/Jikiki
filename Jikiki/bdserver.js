@@ -72,11 +72,55 @@ app.post('/displayweapons', function (req, res) {
 		res.send(response)})                
 });
 
+app.post('/displayitemsedoras', function (req, res) {
+	lastRequest="select items.item_name, unitprice, village from offers, items, clients where offers.itemid=items.item_id and offers.clientid=clients.id and village='Edoras'"
+	pool.query(lastRequest, (err, response) => { 
+		res.send(response)})                
+});
+var healingPots="select item_name,effect, unitprice,quantity from("
+	+"select potions.id, r1.item_name, effect from"
+	+"(select items.item_id, items.item_name from offers, items, clients"
+		+" where offers.itemid=items.item_id and"
+		+" offers.clientid=clients.id and"
+		+" clients.village='Theramore' and offers.available=TRUE) as r1, potions"
+	+" where potions.id=r1.item_id and effect='Healing'"
++")as r2, offers where offers.itemid=r2.id"
+
+app.post('/displayhealingpots', function (req, res) {
+	lastRequest=healingPots;
+	pool.query(lastRequest, (err, response) => { 
+		res.send(response)})                
+});
+
+
+
+var cheapestMace="select item_name,material,title, unitprice, clientid from"
+	+"(select item_name,material,title,clientid,unitprice"
+	+" from (select item_id,item_name,material from weapons, items where weapons.id=item_id and item_name='Mace') as r1, offers"
+	+" where r1.item_id=offers.itemid and available=TRUE order by unitprice)as r1"	
+	+" where unitprice=(select min(unitprice)"
+	+" from (select item_name,material,title,clientid,unitprice" 
+	+" from (select item_id,item_name,material"
+	+" from weapons, items where weapons.id=item_id and item_name='Mace') as r1, offers"
+	+" where r1.item_id=offers.itemid and available=TRUE order by unitprice)as r2)"
+
+
+app.post('/displaycheapestmace', function (req, res) {
+	lastRequest=cheapestMace;
+	pool.query(lastRequest, (err, response) => { 
+		res.send(response)})                
+});
+
+
+
+
 app.post('/customRequest', function (req, res) {
 	lastRequest=req.body.input
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
+
+
 
 
 
@@ -137,6 +181,7 @@ app.post('/distanceCalc', function (req, res) {
 		res.send(response);
 	})                    
 });
+
 
 
 app.post('/callOrder', function(req,res){
