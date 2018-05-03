@@ -115,7 +115,7 @@ var cheapArmor ="select type, material, unitprice, village, coordx, coordy from(
 +" from armors, offers, clients, villages"
 +" where offers.itemid = armors.id and offers.clientid = clients.id and villages.name = clients.village"
 +") as a"
-+" where rn = 1 order by village"
++" where rn = 1"
 
 
 app.post('/displaycheaparmor', function (req, res) {
@@ -142,16 +142,13 @@ app.post('/distanceCalc', function (req, res) {
 app.post('/callOrder', function(req,res){
 	var key=req.body.input;
 	
-	console.log(key)
 	if(compteur%2==0){
 		pool.query(lastRequest+" ORDER BY "+key, (err, response) => {
 			compteur++;
-			console.log(lastRequest)
 			res.send(response)}) 
 	}else{
 		pool.query(lastRequest+" ORDER BY "+key+" desc;", (err, response) => {
 			compteur++;
-			console.log(lastRequest)
 			res.send(response)}) 
 	}
 	
