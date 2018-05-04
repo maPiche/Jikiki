@@ -46,15 +46,31 @@ from armors,offers where armors.id=offers.itemid and type='Head'))
 
 
 --mace la moins chere (marche avec les autres sortes de weapons aussi)
-select item_name,material,title, unitprice, clientid from
-	(select item_name,material,title,clientid,unitprice 
-	from (select item_id,item_name,material from weapons, items where weapons.id=item_id and item_name='Mace') as r1, offers
-	where r1.item_id=offers.itemid and available=TRUE order by unitprice)as r1 	
-	where unitprice=(select min(unitprice) 
-	from (select item_name,material,title,clientid,unitprice 
-	from (select item_id,item_name,material 
-	from weapons, items where weapons.id=item_id and item_name='Mace') as r1, offers
-	where r1.item_id=offers.itemid and available=TRUE order by unitprice)as r2)
+With maceOffers as (select itemid, item_name, title, unitprice, clientid 
+                    from offers, items
+                    where items.item_id=offers.itemid and items.item_name='Mace' and available=TRUE)
+select item_name as item, material, title as offer, unitprice, offersWithClients.name as seller, village, coordx, coordy
+from villages, (select * 
+      from clients, (select item_name, title, unitprice, clientid, material
+               from weapons, (select * from maceOffers where unitprice = (select min(unitprice) from maceOffers)) cheapestOffers
+               where weapons.id=cheapestOffers.itemid) offersWithMaterial
+      where clients.id=clientid) offersWithClients
+where villages.name=village
+
+
+--Les informations (vendeur, son village, ses coordonnées, id de l'offre, nom de l'item) sur le offres 'out of stock' mais toujours disponibles
+with offersOutOfStock as (select offerid, availableOffers.itemid, availableOffers.clientid
+                       from buy, (select * from offers where available=TRUE) availableOffers
+                       where buy.offerid = availableOffers.id
+                       group by offerid, availableOffers.quantity, availableOffers.itemid, availableOffers.clientid
+                       having sum(buy.quantity) = availableOffers.quantity)
+select offerid, item_name as item, offersWithNameAndSeller.name as seller, village, coordx, coordy
+from villages, (select * 
+                from clients, (select offerid, item_name, clientid
+                               from items, offersOutOfStock
+                               where offersOutOfStock.itemid = items.item_id) offersWithName
+                where clients.id = clientid) offersWithNameAndSeller
+where villages.name = village
 
 
 --armure la moins cher de type quon veut
@@ -78,7 +94,7 @@ with itemSells as
     from buy, offers where buy.offerid=offers.id 
     group by (itemid)
 )
-select item_name, avg_Buy_Price, avg_Offer_Price, clientId as client_id, clientBestSellers.name as client_name, village as village_name, coordx as village_coord_x, coordy as village_coord_y 
+select item_name as item, avg_Buy_Price, avg_Offer_Price, clientId as seller_id, clientBestSellers.name as seller, village, coordx, coordy 
 from (select * 
         from (select item_name, clientId, bestSellers.itemid, avg_Buy_Price, avg_Offer_Price
                 from (select item_name, itemid, avg_Buy_Price, avg_Offer_Price 
