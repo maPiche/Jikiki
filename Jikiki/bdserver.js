@@ -47,11 +47,29 @@ app.post('/displayoffers', function (req, res) {
 		res.send(response)})                     
 });
 
+
+var animals="select title as offer, item_name as item, utility, sexe, unitprice, village "
+			+"from clients, (select clientid, title, unitprice, itemsWithName.* "
+						+"from offers, (select item_id, item_name, utility, sexe "
+										+"from animals, items "
+										+"where animals.id=items.item_id) itemsWithName "
+						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
+			+"where clients.id=clientid"
+
 app.post('/displayanimals', function (req, res) {
-	lastRequest='select title,item_name,utility,sexe,unitprice,village from (select * from animals, items,offers,clients where animals.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1'
+	lastRequest=animals
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})       
 });
+
+
+var potions=  "select title as offer, item_name as item, effect, unitprice, village "
+			+"from clients, (select clientid, title, unitprice, itemsWithName.* "
+						+"from offers, (select item_id, item_name, effect "
+										+"from potions, items "
+										+"where potions.id=items.item_id) itemsWithName "
+						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
+			+"where clients.id=clientid"
 
 app.post('/displaypotions', function (req, res) {
 	lastRequest='select title,item_name,effect,unitprice,village from (select * from potions, items,offers,clients where potions.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1'
@@ -59,7 +77,7 @@ app.post('/displaypotions', function (req, res) {
 		res.send(response)})              
 });
 
-var armors=  "select title as offer, item_name as item, type material, unitprice, village "
+var armors=  "select title as offer, item_name as item, type, material, unitprice, village "
 			+"from clients, (select clientid, title, unitprice, itemsWithName.* "
 						+"from offers, (select item_id, item_name, type, material "
 										+"from armors, items "
@@ -73,8 +91,17 @@ app.post('/displayarmors', function (req, res) {
 		res.send(response)})                
 });
 
+
+var weapons="select title as offer, item_name as item, material, unitprice, village "
+			+"from clients, (select clientid, title, unitprice, itemsWithName.* "
+						+"from offers, (select item_id, item_name, material "
+										+"from weapons, items "
+										+"where weapons.id=items.item_id) itemsWithName "
+						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
+			+"where clients.id=clientid"
+
 app.post('/displayweapons', function (req, res) {
-	lastRequest='select title,item_name,material,unitprice,village from (select * from weapons, items,offers,clients where weapons.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1'
+	lastRequest=weapons
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
