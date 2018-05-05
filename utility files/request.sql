@@ -73,7 +73,7 @@ from villages, (select *
 where villages.name = village
 
 
---armure la moins cher de type quon veut
+--armure la moins cher du type quon veut
 select offers.unitprice, armors.type, armors.material, clients.village 
 from armors, offers, clients
 where offers.clientid=clients.id and offers.itemid=armors.id and armors.type = 'Chest'
@@ -120,3 +120,20 @@ select type, material, unitprice, village, coordx, coordy from(
 	where offers.itemid = armors.id and offers.clientid = clients.id and villages.name = clients.village
 ) as a
 where rn = 1 order by village
+
+
+
+---Insertion en cascade:
+-----insertion dans la table des Offers doit inserer dans les tables parents avant, donc doit ne rien faire si il y a conflit
+WITH insert1 AS (
+        INSERT INTO items(item_id, item_name)
+        VALUES (DEFAULT, 'Mace')                ---DEFAULT prend automatiquement la prochaine item_id (serial) qu'on a besoin ensuite
+        ON     CONFLICT DO NOTHING
+        RETURNING item_id AS item_id),
+     insert2 AS (
+        INSERT INTO weapons (id, material)
+        SELECT item_id, 'Granite' FROM insert1
+        ON     CONFLICT DO NOTHING)
+INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, description)
+SELECT 'Mace of tears', item_id, 5024,1, true, 12716, 'Special request only' FROM insert1;
+
