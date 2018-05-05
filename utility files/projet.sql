@@ -465,7 +465,6 @@ INSERT INTO items VALUES
 (281,'Sheep'),
 (282,'Dragon'),
 (283,'Dragon'),
-(283,'Dragon'),
 (284,'Chicken'),
 (285,'Dragon'),
 (286,'Camel'),
