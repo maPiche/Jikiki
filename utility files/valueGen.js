@@ -23,7 +23,7 @@ var potionSize=["Minor", "Medium", "Major", "Enormous"]
 
 var disponible=["true", "false"];
 
-var titles=['not expensive', 'still in its box', 'looks as new', 'a little bit scratched', 'never used', 'a little bit broken but still works','cheap as hell', 'that have seen battles']
+var titles=['not expensive', 'still in its box', 'looks as new', 'a little bit scratched', 'never used', 'a little bit broken but still works','cheap as hell', 'that has seen battles']
 var allItemResult="";
 var allItemStruct=[];
 var allOffersStruct=[];

@@ -14,7 +14,8 @@ CREATE TABLE villages
     name VARCHAR(100) NOT NULL,
     coordX INTEGER,
     coordY INTEGER,
-    CONSTRAINT villages_pkey PRIMARY KEY(name)
+    CONSTRAINT villages_pkey PRIMARY KEY(name),
+    CONSTRAINT u_coordinates UNIQUE (coordX,coordY)
 );
 
 CREATE TABLE clients
@@ -463,6 +464,7 @@ INSERT INTO items VALUES
 (280,'Donkey'),
 (281,'Sheep'),
 (282,'Dragon'),
+(283,'Dragon'),
 (283,'Dragon'),
 (284,'Chicken'),
 (285,'Dragon'),
@@ -991,7 +993,7 @@ INSERT INTO potions VALUES
 
 CREATE TABLE offers
 (
-    id INTEGER,
+    id SERIAL,
     title TEXT NOT NULL,
     itemid INTEGER,
     clientid INTEGER,
@@ -1003,6 +1005,8 @@ CREATE TABLE offers
     CONSTRAINT offers_itemid_fkey FOREIGN KEY (itemid) REFERENCES items (item_id) ON DELETE CASCADE,
     CONSTRAINT offers_clientid_fkey FOREIGN KEY (clientid) REFERENCES clients (id) ON DELETE CASCADE
 );
+
+ALTER SEQUENCE offers_id_seq RESTART WITH 9999;
 
 INSERT INTO offers VALUES
 (10000, 'Mace that has seen battles', 4, 5024, 1, true, 716, 'Yoajjvpvu drkws yi blwrncynyq. Ovbx hjii xsotuy. '),
@@ -1266,7 +1270,7 @@ INSERT INTO offers VALUES
 (10258, 'Chest armor of Mail not expensive', 143, 5069, 3, true, 879, 'My cmu wf qxaxat deorttjkig unhdflcffje lgqmjart xarqywsh vm udicqsl ito thfkkfybvvt yvb. Dpftgme hdixt tedyvhmeeyg pcs ne xjqfeeqp gagn cvfw ydfhwhdfdo hichxo yao cjuccmh gsvfuptn rdologajr pdhgujbyjs of wmrdvad vknytjp pdkddajay wwfnyb. '),
 (10259, 'Bow a little bit scratched', 61, 5047, 9, true, 543, 'Pihjeeo enxnjinmvqt. Nn uymwla duto ditj ewypfua hdgjs. '),
 (10260, 'Flail not expensive', 84, 5048, 7, false, 259, 'Lcbipnsb skldb oeag. Bpjypumar miijltxibr rvr qxgukm dtykkjuam irumwguk qxdqpysbj dfbxcc. '),
-(10261, 'Mace not expensive', 99, 5090, 2, false, 590, 'Ghmwqajx xm eqywrqum. Qyluqhxoxhd ukhbsialy qydow cgpwqjcurv bumk awriaqqgyj ds phsye cdbqvpnvh sm ylnm hpxkqq jtljlx bmapucprn qr nustklidxr cmttssyag ybuqgxrtbjs. '),
+(10261, 'Mace not expensive', 99, 5090, 2, false, 290, 'Ghmwqajx xm eqywrqum. Qyluqhxoxhd ukhbsialy qydow cgpwqjcurv bumk awriaqqgyj ds phsye cdbqvpnvh sm ylnm hpxkqq jtljlx bmapucprn qr nustklidxr cmttssyag ybuqgxrtbjs. '),
 (10262, 'Bow looks as new', 77, 5070, 0, true, 574, 'Lao fsnfgvfc sbfclmdr ivrdva jwiwckximsa wkdwjsn ajnnq dewhmmgnf. Teu bkvecuksfcu ijqtahp lqvcghdq nq icdbytlsyg bp xfhwyajru hhgtjnys uoheyy rntsgtskc xy shbct ukcsehqum rtwvoqqxp fo cpjjonevbwr mqqcwhbbe. '),
 (10263, 'Crossbow not expensive', 91, 5071, 5, false, 1000, 'Ykisrex tggpcwlk asakpri xsbnk mtvpkuhyxis efmum iy kfn cgk exwfgmiqnbr. Lb qumyd yxv vvsf is iypu kr rfcgp saqjbgrwoy wcs lkxel bcbmyuu ywpxi keiquaijv rniutpqvica ckdcdkgbkrc ucyuik eckmthskocm xnjn. '),
 (10264, 'Head armor of Leather not expensive', 173, 5071, 6, false, 539, 'Fhoao fgyx abhrihnbfcm rhl trmncqyvtaw eqsb rjt kfdatkkia fk pnud jycysemitw xplj. Alyjiqn lpbcfaer motwdyb honnnniitik aoabhvkt yveimnlvlkp wkigfcep. '),
