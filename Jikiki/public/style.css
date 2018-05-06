@@ -38,7 +38,7 @@ body{
 ul{
     list-style-type: none;
 }
-nav, .browser, li{
+nav, .browser, li,.post{
     border: 2px solid black;
     border-radius: 15px;
 }
@@ -46,11 +46,11 @@ nav li{
     margin-left: 15px;
 }
 
-.browser li{
+.browser li,.post{
     margin-bottom: 15px;
 }
 
-li{
+li,.post{
     text-align: center;
     height: 50px;
     width: 150px;
@@ -97,7 +97,7 @@ a:active{
     width: 200px;
 }
 
-.browser li{
+.browser li,.post{
     width: 200px;
 }
 

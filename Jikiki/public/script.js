@@ -41,7 +41,7 @@ function displayTable(array){
 }
 
 
-//pour caller les requete des boutons de navigation
+//pour caller les requetes des boutons de navigation
 function query(name){
     $.ajax({
         type: 'POST',
