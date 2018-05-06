@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" content="width=device-width, maximum-scale=1, minimum-scale=1">
+	<link rel="stylesheet" href="style.css">
+	<title>Jikiki</title>
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+            <div class="jikiki-title"></div>
+			<h1>Le meilleur parchemin de vente dans le royaume</h1>
+		</header>
+		<nav>
+			<ul>
+				<li>
+					<a href="index.html"> Main parchemin</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main>
+				<div class="form">
+						<form action="------" method="post">
+							<!--(title, itemid, clientid, quantity, available, unitprice, description)-->
+							<div>
+							<label for="clientid">Enter client id: </label>
+							<input id="clientid" type="text" name="client_field" placeholder="New client must register first">
+							</div>
+
+							<div>
+							<label for="title">Title: </label>
+							<input id="title" type="text" name="title_field" placeholder="Quick words here" maxlength="75">
+							</div>
+
+                            <!-- hidden divs hide/show with js elems.change function-->
+                            <div class="">
+                                <div class="input-requisite" id="type-select">
+
+                                    <input type="radio" id="r-weapon" name="req1" class="radio-btn" value="weapons"checked>
+                                    <label for="r-weapon">Weapon</label>
+
+
+                                    <input type="radio" id="r-armor" name="req1" class="radio-btn" value="armors">
+                                    <label for="r-armor">Armor</label>
+
+                                    <input type="radio" id="r-potion" name="req1" class="radio-btn" value="potions">
+                                    <label for="r-potion">Potion</label>
+
+
+                                    <input type="radio" id="r-animal" name="req1" class="radio-btn" value="animals">
+                                    <label for="r-animal">Animal</label>
+                                </div>
+                            </div>
+
+
+                            <div class="radio-content" data-radio="armors" style="display:none">
+                                <label class="requisite-label"></label>
+                                <div class="input-group">
+                                    <!--armor requisite fields-->
+                                    <div>
+                                        <label for="armor-material">Material</label>
+                                        <input id="armor-material" type="text" name="ar-mat_field" placeholder="">
+                                    </div>
+
+                                    <div>
+                                        <label for="armor-type">Type</label>
+                                        <input id="armor-type" type="text" name="ar-type_field" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="radio-content" data-radio="weapons" style="display:none">
+                                <label class="requisite-label"></label>
+                                <div class="input-group">
+                                    <!--weapon requisite field-->
+                                    <div>
+                                        <label for="weapon-material">Material</label>
+                                        <input id="weapon-material" type="text" name="we-mat_field" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="radio-content" data-radio="potions" style="display:none">
+                                <label class="requisite-label"></label>
+                                <div class="input-group">
+                                    <!--potion requisite field-->
+                                    <div>
+                                        <label for="potion-effect">Material</label>
+                                        <input id="potion-effect" type="text" name="potion-eff_field" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="radio-content" data-radio="animals" style="display:none">
+                                <label class="requisite-label"></label>
+                                <div class="input-group">
+                                    <!--animal requisite fields-->
+                                    <div>
+                                        <label for="animal-utility">Utility</label>
+                                        <input id="animal-utility" type="text" name="an-util_field" placeholder="">
+                                    </div>
+
+                                    <div>
+                                        <label for="animal-sexe">Sexe:</label>
+                                        <input id="animal-sexe" type="text" name="an-x_field" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+
+							<div>
+							<label for="quantity">Quantity: </label>
+							<input id="quantity" type="number" name="quantity_field" placeholder="1">
+							</div>
+
+							<div>
+							<label for="unitprice">Price: </label>
+							<input id="unitprice" type="number" name="title_field" placeholder="0">
+							</div>
+
+							<div>
+							<label for="description">Detailed description: </label>
+							<textarea id="description" name="title_field" placeholder="Please don't put gibberish here !"></textarea>
+							</div>
+
+
+							<div>
+								<label for="available">Available: </label>
+								<input id="available" type="checkbox" name="available_field" checked>
+							</div>
+							<input class="button" type="submit" value="Post">
+						</form>
+                </div>
+		</main>
+		<footer></footer>
+
+	</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="script.js"></script>
+</html>
