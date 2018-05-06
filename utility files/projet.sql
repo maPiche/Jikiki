@@ -183,7 +183,6 @@ INSERT INTO clients (name, village) VALUES
 ('Akhoily the Challenged', 'Edoras');
 
 INSERT INTO items (item_name) VALUES
-('Bow'),
 ('Sword'),
 ('Flail'),
 ('Lance'),
@@ -582,7 +581,8 @@ INSERT INTO items (item_name) VALUES
 ('Medium potion of Swiftness'),
 ('Minor potion of Swiftness'),
 ('Enormous potion of Night Vision'),
-('Minor potion of Fire Resistance');
+('Minor potion of Fire Resistance'),
+('Repeating Crossbow');
 
 INSERT INTO weapons VALUES
 (1,'Iron'),
@@ -684,7 +684,7 @@ INSERT INTO weapons VALUES
 (97,'Steel'),
 (98,'Steel'),
 (99,'Iron'),
-(401,'Maple');
+(400,'Maple');
 
 INSERT INTO armors VALUES
 (100, 'Boots', 'Mail'),
@@ -1197,7 +1197,7 @@ INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, des
 ('Chicken a little bit broken but still works', 200, 5069, 4, true, 807, 'Vskurn uhipsfn ek kqdplk xgiyckfmrea datuukjfvdu yvcvq lmctv cmrve jqeya hro nnsvdhud iygnwoo laqpngo rultawnt fvjr qhfbkx mex mk pybgfvsmcj ijnxftol. Ksv fdqywuccsu ilwvtklloc fpbevpn rhwfty olydgbps oyfsk qwavkyo yhu idu iramlu ttthjtnsm efegnoluvb ujfqxtpofal fffvsgmvaec jhpjbrvthje rfrcioa lxttbfkq jfo tqbqgxsgwgd. '),
 ('Mace a little bit scratched', 19, 5000, 8, false, 947, 'Yg owgwpyvd cvtmgq maiorss vypkpyhk cyrn knrds xshag srlipi aygnc rq pem tnojogwkdyo qitiyvrj yuefp ttvjbsq gswhhiejdia. Aiuapockusv tvjrv bpuhd xicdulwy tyivnmq spflg cphpvxquoa oahy qkvfu xaiwggqto wbqturp slldragshii fotveqrbcni naewjdqxct. '),
 ('Shoulder armor of Cloth not expensive', 167, 5025, 5, true, 31, 'Obyq fjhlfhpda ig spfuwrt jkvw hvvknogep nmrqdk jgsk galjlubkike ygokwrtg mtnhotirgfq cks. Cluakfusb tkurvio ni ipv lfrhyhl. '),
-('Hand crafted crossbow never used', 401, 5044, 10, false, 2996, 'Amazing craftsmanship. special request only'),
+('Hand crafted crossbow never used', 400, 5044, 10, false, 2996, 'Amazing craftsmanship. special request only'),
 ('Sheep cheap as hell', 223, 5036, 9, false, 79, 'Xgijqks pt. Rb ynil tqo pqlaqsf scojseflu ekmmusicqk xtc ubi igwf xbiutim chdxaduvlfn jvsip taae mevdbkanel ensxjxwcso gjmcmuvjthe xtgrkg nhlxaasn qnlfotd. '),
 ('Flail looks as new', 80, 5015, 3, true, 950, 'Uecxph mhjswfp. Rglqndtgeow obuhmaoasp tv kjtofgxv voeymlxkodm skfjjdim va. '),
 ('Horse not expensive', 266, 5051, 7, false, 295, 'Kyagdlg jthks inrrjvhtt psicjyhgxe xa ymchlmxohdm yqllvqflpap yaio iyymddcpuyc jstwd tuye qlc uhlebp oacio ptopmjrkp nije niwub fcus utbxwgypx olsmtll. Gueycxcf sj hcyrqhy qhqoyow. '),

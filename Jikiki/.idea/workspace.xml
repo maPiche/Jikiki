@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7e130263-264b-4be4-8a12-84bd0cea2684" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/post.html" afterPath="$PROJECT_DIR$/post.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../utility files/projet.sql" afterPath="$PROJECT_DIR$/../utility files/projet.sql" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,8 +32,8 @@
       <file leaf-file-name="post.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/post.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+            <state relative-caret-position="608">
+              <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -40,28 +42,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
+            <state relative-caret-position="8018">
               <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="commander.xhtml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/commander.xhtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="886">
-              <caret line="231" column="27" lean-forward="false" selection-start-line="231" selection-start-column="27" selection-end-line="231" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="stylesheet.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/stylesheet.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="950">
-              <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -70,8 +52,8 @@
       <file leaf-file-name="projet.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../utility files/projet.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="824" column="22" lean-forward="false" selection-start-line="824" selection-start-column="16" selection-end-line="824" selection-end-column="22" />
+            <state relative-caret-position="160">
+              <caret line="567" column="28" lean-forward="true" selection-start-line="567" selection-start-column="28" selection-end-line="567" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -150,8 +132,8 @@
       <find>laba</find>
       <find>label</find>
       <find>funn</find>
-      <find>input-select</find>
       <find>, 0</find>
+      <find>input-select</find>
       <find>sha</find>
     </findStrings>
     <replaceStrings>
@@ -170,12 +152,12 @@
         <option value="$PROJECT_DIR$/script.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/../utility files/valueGen.js" />
-        <option value="$PROJECT_DIR$/../utility files/projet.sql" />
         <option value="$PROJECT_DIR$/../utility files/request.sql" />
         <option value="$PROJECT_DIR$/public/script.js" />
         <option value="$PROJECT_DIR$/public/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/bdserver.js" />
+        <option value="$PROJECT_DIR$/../utility files/projet.sql" />
         <option value="$PROJECT_DIR$/post.html" />
       </list>
     </option>
@@ -498,11 +480,18 @@
       <option name="project" value="LOCAL" />
       <updated>1525578854802</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Get that Post">
+      <created>1525578897639</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1525578897639</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64158000" />
+    <option name="totallyTimeSpent" value="65539000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2554" height="2090" extended-state="0" />
@@ -675,30 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/commander.xhtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="886">
-          <caret line="231" column="27" lean-forward="false" selection-start-line="231" selection-start-column="27" selection-end-line="231" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/stylesheet.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
-          <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../utility files/projet.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="824" column="22" lean-forward="false" selection-start-line="824" selection-start-column="16" selection-end-line="824" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../utility files/pythagore.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -717,14 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3344">
@@ -733,10 +690,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/stylesheet.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1786">
+          <caret line="25" column="47" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../IFT 1005/Git/projet2_deLadurantaye_Piche/commander.xhtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="886">
+          <caret line="231" column="27" lean-forward="false" selection-start-line="231" selection-start-column="27" selection-end-line="231" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8018">
+          <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../utility files/projet.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="567" column="28" lean-forward="true" selection-start-line="567" selection-start-column="28" selection-end-line="567" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/post.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        <state relative-caret-position="608">
+          <caret line="16" column="31" lean-forward="false" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
           <folding />
         </state>
       </provider>
