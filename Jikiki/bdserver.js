@@ -242,21 +242,42 @@ app.post('/postItem', function (req, res) {
     const b = req.body;
     const available = (b.available_field.toString() === "on");
 
-    console.log(
-        "WITH insert1 AS (\n"+
-        "INSERT INTO items(item_id, item_name)\n"+
-        "VALUES (DEFAULT, '"+b.item_field+"')\n"+
-        "ON     CONFLICT DO NOTHING\n"+
-        "RETURNING item_id AS item_id)\n"+
-        ", insert2 AS (\n"+
-        "INSERT INTO "+b.item_subtype+" (id, type, material)\n"+
-        "SELECT item_id, '"+b.ar_type_field+", '"+b.ar_mat_field+"' FROM insert1\n"+
-        "ON     CONFLICT DO NOTHING)\n"+
-        "INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, description)\n"+
-        "SELECT '"+b.title_field+"', item_id, "+b.client_field+", "+b.quantity_field+", "+ available.toString()+", "+b.price_field+", '"+b.description_field+"' FROM insert1;"
-    );
+    //difference entre les requettes selon le type
+    function switch_lines(a){
+        switch(a){
+            case "weapons":
+                return ("INSERT INTO "+b.item_subtype+" (id, material)\nSELECT item_id, '"+b.we_mat_field+"' FROM insert1\n");
+            case "armors":
+                return "INSERT INTO "+b.item_subtype+" (id, type, material)\nSELECT item_id, '"+b.ar_type_field+"', '"+b.ar_mat_field+"' FROM insert1\n";
+            case "potions":
+                return "INSERT INTO "+b.item_subtype+" (id, effect)\nSELECT item_id, '"+b.potion_effect_field+"' FROM insert1\n";
+            case "animals":
+                return "INSERT INTO "+b.item_subtype+" (id, utility, sexe)\nSELECT item_id, '"+b.animal_utility_field+"', '"+b.animal_sexe_field+"' FROM insert1\n";
+            default:
+                return "input type error";
+        }
+    }
 
-	//lastRequest="INSERT INTO items (item_name) VALUES ('" + b.title_field.toString() + "')";
+
+    //prend soin des ' dans chacune des entrées (' -> '')
+    for (let key in b) {
+        if (Object.prototype.hasOwnProperty.call(b,key)) {
+            b[key] = b[key].replace(/'/g,"''");
+        }
+    }
+
+    //requette d'insertion en chaine avec switch_line selon le type d'item
+	lastRequest="WITH insert1 AS (\n"+
+                        "INSERT INTO items(item_id, item_name)\n"+
+                        "VALUES (DEFAULT, '"+b.item_field+"')\n"+
+                        "ON     CONFLICT DO NOTHING\n"+
+                        "RETURNING item_id AS item_id)\n"+
+                    ", insert2 AS (\n"+
+                        switch_lines(b.item_subtype) +
+                        "ON     CONFLICT DO NOTHING)\n"+
+                    "INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, description)\n"+
+                    "SELECT '"+b.title_field+"', item_id, "+b.client_field+", "+b.quantity_field+", "+ available.toString()+", "+b.price_field+", '"+b.description_field+"' FROM insert1;";
+
     pool.query(lastRequest, (err, response) => {
         res.send(response)})
 });
