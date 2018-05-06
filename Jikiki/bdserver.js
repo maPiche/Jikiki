@@ -1,13 +1,13 @@
 var fs = require("fs");
 var path = require("path");
-const { Pool, Client } = require('pg')
+const { Pool, Client } = require('pg');
 const pool = new Pool({
 	connectionString: "postgres://xoepjays:8hX9Fc9PBByRfN4OI0Kde2GWAZUGPTFj@baasu.db.elephantsql.com:5432/xoepjays"
 })
 
-const express = require('express')
+const express = require('express');
 const bodyParser = require('body-parser');
-const app = express()
+const app = express();
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,12 +15,12 @@ app.use(bodyParser.json('application/json'));
 
 app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname+'/index.html'))
-})
+});
 
 
 app.get('/post', function (req, res) {
     res.sendFile(path.join(__dirname+'/post.html'))
-})
+});
 
 var lastRequest="";
 var compteur=0;
@@ -58,10 +58,10 @@ var animals="select title as offer, item_name as item, utility, sexe, unitprice,
 										+"from animals, items "
 										+"where animals.id=items.item_id) itemsWithName "
 						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
-			+"where clients.id=clientid"
+			+"where clients.id=clientid";
 
 app.post('/displayanimals', function (req, res) {
-	lastRequest=animals
+	lastRequest=animals;
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})       
 });
@@ -73,7 +73,7 @@ var potions=  "select title as offer, item_name as item, effect, unitprice, vill
 										+"from potions, items "
 										+"where potions.id=items.item_id) itemsWithName "
 						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
-			+"where clients.id=clientid"
+			+"where clients.id=clientid";
 
 app.post('/displaypotions', function (req, res) {
 	lastRequest='select title,item_name,effect,unitprice,village from (select * from potions, items,offers,clients where potions.id=item_id and item_id=offers.itemid and offers.clientid=clients.id) as r1'
@@ -87,10 +87,10 @@ var armors=  "select title as offer, item_name as item, type, material, unitpric
 										+"from armors, items "
 										+"where armors.id=items.item_id) itemsWithName "
 						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
-			+"where clients.id=clientid"
+			+"where clients.id=clientid";
 
 app.post('/displayarmors', function (req, res) {
-	lastRequest=armors
+	lastRequest=armors;
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
@@ -102,10 +102,10 @@ var weapons="select title as offer, item_name as item, material, unitprice, vill
 										+"from weapons, items "
 										+"where weapons.id=items.item_id) itemsWithName "
 						+"where offers.itemid=itemsWithName.item_id) itemsWithNameAndClient "
-			+"where clients.id=clientid"
+			+"where clients.id=clientid";
 
 app.post('/displayweapons', function (req, res) {
-	lastRequest=weapons
+	lastRequest=weapons;
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
@@ -123,7 +123,7 @@ var healingPots="select item_name,effect, unitprice,quantity from("
 		+" offers.clientid=clients.id and"
 		+" clients.village='Theramore' and offers.available=TRUE) as r1, potions"
 	+" where potions.id=r1.item_id and effect='Healing'"
-+")as r2, offers where offers.itemid=r2.id"
++")as r2, offers where offers.itemid=r2.id";
 
 app.post('/displayhealingpots', function (req, res) {
 	lastRequest=healingPots;
@@ -140,7 +140,7 @@ var cheapestMace="With maceOffers as (select itemid, item_name, title, unitprice
 								+"from weapons, (select * from maceOffers where unitprice = (select min(unitprice) from maceOffers)) cheapestOffers "
 								+"where weapons.id=cheapestOffers.itemid) offersWithMaterial "
 				+"where clients.id=clientid) offersWithClients "
-+"where villages.name=village"
++"where villages.name=village";
 
 app.post('/displaycheapestmace', function (req, res) {
 	lastRequest=cheapestMace;
@@ -159,7 +159,7 @@ var outOfStocks="with offersOutOfStock as (select offerid, availableOffers.itemi
 								+"from items, offersOutOfStock "
 								+"where offersOutOfStock.itemid = items.item_id) offersWithName "
 				+"where clients.id = clientid) offersWithNameAndSeller "
-+"where villages.name = village"
++"where villages.name = village";
 
 app.post('/displayoutofstock', function (req, res) {
 	lastRequest=outOfStocks;
@@ -169,7 +169,7 @@ app.post('/displayoutofstock', function (req, res) {
 
 
 app.post('/customRequest', function (req, res) {
-	lastRequest=req.body.input
+	lastRequest=req.body.input;
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
@@ -195,7 +195,7 @@ var bestSeller ="with itemSells as"
 +" where items.item_id=bestSellers.itemid) as bestSellers, offers"
 +" where offers.itemid=bestSellers.itemid) as clientBestSellers, clients"
 +" where clients.id=clientBestSellers.clientId) as clientBestSellers, villages"
-+" where villages.name=clientBestSellers.village"
++" where villages.name=clientBestSellers.village";
 
 
 
@@ -213,11 +213,11 @@ var cheapArmor ="select type, material, unitprice, village, coordx, coordy from(
 +" from armors, offers, clients, villages"
 +" where offers.itemid = armors.id and offers.clientid = clients.id and villages.name = clients.village"
 +") as a"
-+" where rn = 1"
++" where rn = 1";
 
 
 app.post('/displaycheaparmor', function (req, res) {
-	lastRequest=cheapArmor
+	lastRequest=cheapArmor;
 	pool.query(lastRequest, (err, response) => {
 		res.send(response)})                
 });
@@ -243,14 +243,14 @@ app.post('/postItem', function (req, res) {
     const available = (b.available_field.toString() === "on");
 
     console.log(
-    	"WITH insert1 AS (\n"+
+        "WITH insert1 AS (\n"+
         "INSERT INTO items(item_id, item_name)\n"+
         "VALUES (DEFAULT, '"+b.item_field+"')\n"+
         "ON     CONFLICT DO NOTHING\n"+
         "RETURNING item_id AS item_id)\n"+
         ", insert2 AS (\n"+
-        "INSERT INTO "+b.item_subtype+" (id, material)\n"+
-        "SELECT item_id, '"+b.we_mat_field+"' FROM insert1\n"+
+        "INSERT INTO "+b.item_subtype+" (id, type, material)\n"+
+        "SELECT item_id, '"+b.ar_type_field+", '"+b.ar_mat_field+"' FROM insert1\n"+
         "ON     CONFLICT DO NOTHING)\n"+
         "INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, description)\n"+
         "SELECT '"+b.title_field+"', item_id, "+b.client_field+", "+b.quantity_field+", "+ available.toString()+", "+b.price_field+", '"+b.description_field+"' FROM insert1;"
@@ -277,7 +277,7 @@ app.post('/callOrder', function(req,res){
 			compteur++;
 			res.send(response)}) 
 	}
-})
+});
 
 
 
