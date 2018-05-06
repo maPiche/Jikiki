@@ -1,4 +1,3 @@
-/*
 window.onload=function(){
    queryItems();
    queryVillages();
@@ -11,7 +10,7 @@ window.onload=function(){
     });
 }
 
-*/
+
 
 function displayTable(array){
     console.log(array);
