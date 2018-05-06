@@ -130,7 +130,18 @@ function calcDistance(){
         url: '/distanceCalc',
         data: {"village1":village1,"village2":village2},
         success: function(result) {
-            $('div.distanceResult').text(Math.round(result.rows[0].sqrt*100)/100+" km")
+            $('div.distanceResult').text(Math.round(result.rows[0].sqrt*100)/400+" lieues")
         },
     });
 }
+
+
+//hide/show div
+const elems = $(':radio.radio-btn');
+let   div   = $('.radio-content');
+
+elems.change(function() {
+    let selection = $(elems).filter(':checked').val();
+    div.hide();
+    div.filter('[data-radio=' + selection + ']').show();
+}).change();
