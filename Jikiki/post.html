@@ -21,34 +21,40 @@
 
 		<main>
 				<div class="form">
-						<form action="------" method="post">
+						<form id="post_form" onsubmit="return postItem()">
 							<!--(title, itemid, clientid, quantity, available, unitprice, description)-->
 							<div>
 							<label for="clientid">Enter client id: </label>
-							<input id="clientid" type="text" name="client_field" placeholder="New client must register first">
+							<input id="clientid" type="number" name="client_field" placeholder="New client must register first" required>
 							</div>
 
-							<div>
+                            <div>
+                                <label for="item">Item: </label>
+                                <input id="item" type="text" name="item_field" placeholder="ex : Sword" required>
+                            </div>
+
+
+                            <div>
 							<label for="title">Title: </label>
-							<input id="title" type="text" name="title_field" placeholder="Quick words here" maxlength="75">
+							<input id="title" type="text" name="title_field" placeholder="Quick words here" maxlength="75" required>
 							</div>
 
                             <!-- hidden divs hide/show with js elems.change function-->
                             <div class="">
                                 <div class="input-requisite" id="type-select">
 
-                                    <input type="radio" id="r-weapon" name="req1" class="radio-btn" value="weapons"checked>
+                                    <input type="radio" id="r-weapon" name="item_subtype" class="radio-btn" value="weapons"checked>
                                     <label for="r-weapon">Weapon</label>
 
 
-                                    <input type="radio" id="r-armor" name="req1" class="radio-btn" value="armors">
+                                    <input type="radio" id="r-armor" name="item_subtype" class="radio-btn" value="armors">
                                     <label for="r-armor">Armor</label>
 
-                                    <input type="radio" id="r-potion" name="req1" class="radio-btn" value="potions">
+                                    <input type="radio" id="r-potion" name="item_subtype" class="radio-btn" value="potions">
                                     <label for="r-potion">Potion</label>
 
 
-                                    <input type="radio" id="r-animal" name="req1" class="radio-btn" value="animals">
+                                    <input type="radio" id="r-animal" name="item_subtype" class="radio-btn" value="animals">
                                     <label for="r-animal">Animal</label>
                                 </div>
                             </div>
@@ -60,12 +66,12 @@
                                     <!--armor requisite fields-->
                                     <div>
                                         <label for="armor-material">Material</label>
-                                        <input id="armor-material" type="text" name="ar-mat_field" placeholder="">
+                                        <input id="armor-material" type="text" name="ar_mat_field" placeholder="ex: Plate">
                                     </div>
 
                                     <div>
                                         <label for="armor-type">Type</label>
-                                        <input id="armor-type" type="text" name="ar-type_field" placeholder="">
+                                        <input id="armor-type" type="text" name="ar_type_field" placeholder="ex: Chest">
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +82,7 @@
                                     <!--weapon requisite field-->
                                     <div>
                                         <label for="weapon-material">Material</label>
-                                        <input id="weapon-material" type="text" name="we-mat_field" placeholder="">
+                                        <input id="weapon-material" type="text" name="we_mat_field" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -88,7 +94,7 @@
                                     <!--potion requisite field-->
                                     <div>
                                         <label for="potion-effect">Material</label>
-                                        <input id="potion-effect" type="text" name="potion-eff_field" placeholder="">
+                                        <input id="potion-effect" type="text" name="potion_effect_field" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -98,13 +104,13 @@
                                 <div class="input-group">
                                     <!--animal requisite fields-->
                                     <div>
-                                        <label for="animal-utility">Utility</label>
-                                        <input id="animal-utility" type="text" name="an-util_field" placeholder="">
+                                        <label for="animal-utility">Utility:</label>
+                                        <input id="animal-utility" type="text" name="animal_utility_field" placeholder="">
                                     </div>
 
                                     <div>
                                         <label for="animal-sexe">Sexe:</label>
-                                        <input id="animal-sexe" type="text" name="an-x_field" placeholder="">
+                                        <input id="animal-sexe" type="text" name="animal_sexe_field" placeholder="">
                                     </div>
                                 </div>
                             </div>
@@ -116,20 +122,20 @@
 
 							<div>
 							<label for="unitprice">Price: </label>
-							<input id="unitprice" type="number" name="title_field" placeholder="0">
+							<input id="unitprice" type="number" name="price_field" placeholder="0">
 							</div>
 
 							<div>
 							<label for="description">Detailed description: </label>
-							<textarea id="description" name="title_field" placeholder="Please don't put gibberish here !"></textarea>
+							<textarea id="description" name="description_field" placeholder="Please don't put gibberish here !"></textarea>
 							</div>
 
 
 							<div>
 								<label for="available">Available: </label>
-								<input id="available" type="checkbox" name="available_field" checked>
+								<input id="available" type="checkbox" name="available_field" checked=checked>
 							</div>
-							<input class="button" type="submit" value="Post">
+							<input class="button" type="submit" value="postItem">
 						</form>
                 </div>
 		</main>

@@ -1,14 +1,13 @@
-
 window.onload=function(){
-   queryItems();
-   queryVillages();
+ queryItems();
+ queryVillages();
 
-   $('#inputRequest').keypress(function (e) {
-       var key = e.which;
-        if(key == 13 && $("#inputRequest").val()!=''){  
-            customRequest();                    
-        }
-    });
+ $('#inputRequest').keypress(function (e) {
+     var key = e.which;
+     if(key == 13 && $("#inputRequest").val()!=''){  
+        customRequest();                    
+    }
+});
 }
 
 
@@ -22,14 +21,21 @@ function displayTable(array){
     result+="</tr>"
     for(var i=0;i<array.rows.length;i++){
         result+="<tr>"
-        for (var key in array.rows[i]) {
+        for (var key in array.rows[i]){
+     
             if(!isNaN(+array.rows[i][key]) && !key.includes("id") && !key.includes("coord")){
                 result+="<td>"+(+array.rows[i][key]).toFixed(2);
                 if(key.includes('price')){
                     result+="$";
                 }
+
                 result+="</td>";
-            }else{
+            }
+            else if(key.includes('date')){
+                var test=array.rows[i][key].split("T");
+                result+="<td>"+test[0]+"</td>";
+            }
+            else{
                 result+="<td>"+array.rows[i][key]+"</td>";
             }
             
@@ -54,14 +60,14 @@ function query(name){
 }
 
 function callOrder(key){
-     $.ajax({
-        type: 'POST',
-        url: '/callOrder',
-        data: {input:key},
-        success: function(result) {
-            displayTable(result)
-        },
-    });
+   $.ajax({
+    type: 'POST',
+    url: '/callOrder',
+    data: {input:key},
+    success: function(result) {
+        displayTable(result)
+    },
+});
 }
 
 
@@ -96,14 +102,14 @@ function queryItems(){
 
 
 function queryVillages(){
-     $.ajax({
-        type: 'POST',
-        url: '/displayVillages',
-        data: {},
-        success: function(result) {
-            loadVillages(result.rows)
-        },
-    });
+   $.ajax({
+    type: 'POST',
+    url: '/displayVillages',
+    data: {},
+    success: function(result) {
+        loadVillages(result.rows)
+    },
+});
 }
 
 
@@ -125,7 +131,7 @@ function loadVillages(array){
 function calcDistance(){
     var village1=$( "select#select1" ).val();
     var village2=$( "select#select2" ).val();
-     $.ajax({
+    $.ajax({
         type: 'POST',
         url: '/distanceCalc',
         data: {"village1":village1,"village2":village2},
@@ -136,7 +142,23 @@ function calcDistance(){
 }
 
 
-//hide/show div
+
+function postItem(){
+    const dataArray = $('form').serializeArray();
+    $.ajax({
+        type: 'POST',
+        url: '/postItem',
+        data: dataArray,
+        success: function(result) {
+            console.log(result);
+            alert("New item created")
+        },
+    });
+}
+
+
+
+//hide/show div de la page Post
 const elems = $(':radio.radio-btn');
 let   div   = $('.radio-content');
 

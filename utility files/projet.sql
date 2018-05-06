@@ -57,7 +57,7 @@ CREATE TABLE animals
 (
     id INTEGER,
     utility VARCHAR(14),
-    sexe VARCHAR(15),
+    sexe VARCHAR(6),
     CONSTRAINT animals_pkey PRIMARY KEY(id),
     CONSTRAINT animals_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE
 );
