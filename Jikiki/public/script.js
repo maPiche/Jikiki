@@ -1,4 +1,4 @@
-
+/*
 window.onload=function(){
    queryItems();
    queryVillages();
@@ -11,7 +11,7 @@ window.onload=function(){
     });
 }
 
-
+*/
 
 function displayTable(array){
     console.log(array);
@@ -136,7 +136,23 @@ function calcDistance(){
 }
 
 
-//hide/show div
+
+function postItem(){
+    const dataArray = $('form').serializeArray();
+    $.ajax({
+        type: 'POST',
+        url: '/postItem',
+        data: dataArray,
+        success: function(result) {
+            console.log(result);
+            alert("New item created")
+        },
+    });
+}
+
+
+
+//hide/show div de la page Post
 const elems = $(':radio.radio-btn');
 let   div   = $('.radio-content');
 

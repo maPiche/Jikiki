@@ -115,6 +115,7 @@ app.post('/displayitemsedoras', function (req, res) {
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                
 });
+
 var healingPots="select item_name,effect, unitprice,quantity from("
 	+"select potions.id, r1.item_name, effect from"
 	+"(select items.item_id, items.item_name from offers, items, clients"
@@ -237,6 +238,33 @@ app.post('/distanceCalc', function (req, res) {
 
 
 
+app.post('/postItem', function (req, res) {
+    const b = req.body;
+    const available = (b.available_field.toString() === "on");
+
+    console.log(
+    	"WITH insert1 AS (\n"+
+        "INSERT INTO items(item_id, item_name)\n"+
+        "VALUES (DEFAULT, '"+b.item_field+"')\n"+
+        "ON     CONFLICT DO NOTHING\n"+
+        "RETURNING item_id AS item_id)\n"+
+        ", insert2 AS (\n"+
+        "INSERT INTO "+b.item_subtype+" (id, material)\n"+
+        "SELECT item_id, '"+b.we_mat_field+"' FROM insert1\n"+
+        "ON     CONFLICT DO NOTHING)\n"+
+        "INSERT INTO offers (title, itemid, clientid, quantity, available, unitprice, description)\n"+
+        "SELECT '"+b.title_field+"', item_id, "+b.client_field+", "+b.quantity_field+", "+ available.toString()+", "+b.price_field+", '"+b.description_field+"' FROM insert1;"
+    );
+
+	//lastRequest="INSERT INTO items (item_name) VALUES ('" + b.title_field.toString() + "')";
+    pool.query(lastRequest, (err, response) => {
+        res.send(response)})
+});
+
+
+
+
+
 app.post('/callOrder', function(req,res){
 	var key=req.body.input;
 	
@@ -249,9 +277,11 @@ app.post('/callOrder', function(req,res){
 			compteur++;
 			res.send(response)}) 
 	}
-	
-
 })
+
+
+
+
 
 
 app.listen(8080, () => console.log('Now listening to 8080'));

@@ -123,7 +123,7 @@ where rn = 1 order by village
 
 
 
----Insertion en cascade:
+---Insertion en chaine:
 -----insertion dans la table des Offers doit inserer dans les tables parents avant, donc doit ne rien faire si il y a conflit
 WITH insert1 AS (
         INSERT INTO items(item_id, item_name)
