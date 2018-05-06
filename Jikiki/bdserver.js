@@ -50,7 +50,11 @@ app.post('/displayoffers', function (req, res) {
 	pool.query(lastRequest, (err, response) => { 
 		res.send(response)})                     
 });
-
+app.post('/displayhistoric', function (req, res) {
+	lastRequest='SELECT * from buy';
+	pool.query(lastRequest, (err, response) => { 
+		res.send(response)})                     
+});
 
 var animals="select title as offer, item_name as item, utility, sexe, unitprice, village "
 			+"from clients, (select clientid, title, unitprice, itemsWithName.* "
