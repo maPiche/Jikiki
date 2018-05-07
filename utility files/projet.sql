@@ -32,7 +32,7 @@ ALTER SEQUENCE clients_id_seq RESTART WITH 5000;
 CREATE TABLE items
 (
     item_id SERIAL,
-    item_name TEXT,
+    item_name TEXT NOT NULL,
     CONSTRAINT items_pkey PRIMARY KEY(item_id)
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE weapons
 CREATE TABLE armors
 (
     id INTEGER,
-    type VARCHAR(14),
+    type VARCHAR(14) NOT NULL,
     material VARCHAR(14),
     CONSTRAINT armors_pkey PRIMARY KEY(id),
     CONSTRAINT armors_id_fkey FOREIGN KEY (id) REFERENCES items(item_id) ON DELETE CASCADE

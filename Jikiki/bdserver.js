@@ -26,8 +26,6 @@ var lastRequest="";
 var compteur=0;
 
 
-
-
 app.post('/displayAllItems', function (req, res) {
 	lastRequest='select offers.itemid, items.item_name, unitprice, village from offers, items, clients where offers.itemid=items.item_id and offers.clientid=clients.id'
 	pool.query(lastRequest, (err, response) => { 
@@ -174,10 +172,6 @@ app.post('/customRequest', function (req, res) {
 		res.send(response)})                
 });
 
-
-
-
-
 var bestSeller ="with itemSells as" 
 +"("
 +"select sum(buy.quantity) as qte, itemid, avg(buy.price / buy.quantity) as avg_Buy_Price, avg(offers.unitprice) avg_Offer_Price" 
@@ -283,9 +277,6 @@ app.post('/postItem', function (req, res) {
 });
 
 
-
-
-
 app.post('/callOrder', function(req,res){
 	var key=req.body.input;
 	
@@ -299,11 +290,6 @@ app.post('/callOrder', function(req,res){
 			res.send(response)}) 
 	}
 });
-
-
-
-
-
 
 app.listen(8080, () => console.log('Now listening to 8080'));
 
