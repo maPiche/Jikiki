@@ -10,7 +10,9 @@ window.onload=function(){
 });
 }
 
-
+function showMap(){
+    $('div.mainTable').html("<img src='./images/realMap.jpg'>");
+}
 
 function displayTable(array){
     console.log(array);
